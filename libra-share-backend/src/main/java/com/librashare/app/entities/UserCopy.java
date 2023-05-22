@@ -21,10 +21,10 @@ public class UserCopy {
     private Boolean exchangeReady;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User userCopyUser;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bookId")
+    @JoinColumn(name = "book_id", referencedColumnName = "bookId")
     private Book userCopyBook;
 
     public UserCopy(UserCopyDto userCopyDto) {
