@@ -21,15 +21,15 @@ public class Request {
     private Date lastModified;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userCopyId")
+    @JoinColumn(name = "userCopyId", referencedColumnName  = "userCopyId")
     private UserCopy userCopy;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "userId")
-//    private User requesterId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requesterId", referencedColumnName = "userId")
+    private User requesterId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "exchangerId", referencedColumnName = "userId")
     private User exchangerId;
 
     public Request(RequestDto requestDto) {

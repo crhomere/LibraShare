@@ -24,7 +24,7 @@ public class Book {
     private String description;
     private String image;
     private String author;
-    private BigInteger isbn;
+    private Long isbn;
     @Type(type = "com.librashare.app.entities.CustomStringArrayType")
     @Column(columnDefinition = "text[]")
     private List<String> genre;

@@ -18,7 +18,7 @@ public class BookDto implements Serializable {
     private String description;
     private String image;
     private String author;
-    private BigInteger isbn;
+    private Long isbn;
     private List<String> genre;
 
 
