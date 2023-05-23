@@ -4,10 +4,7 @@ import com.librashare.app.entities.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +16,7 @@ public class BookDto implements Serializable {
     private String image;
     private String author;
     private Long isbn;
-    private List<String> genre;
+    private String genre;
 
 
     public BookDto(Book book) {
