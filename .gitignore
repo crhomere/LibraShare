@@ -16,7 +16,8 @@
 /libra-share-backend/librashare.iml
 
 .idea/
-
+.vscode/
+.DS_Store
 #Front end
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
