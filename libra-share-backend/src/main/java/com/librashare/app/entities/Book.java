@@ -4,12 +4,7 @@ import com.librashare.app.dtos.BookDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.util.List;
-
 
 @Data
 @NoArgsConstructor
@@ -19,19 +14,24 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
+    @Column
     private String title;
     @Column(columnDefinition = "TEXT")
     private String description;
+    @Column
     private String image;
+    @Column
     private String author;
+    @Column
     private Long isbn;
-    @Type(type = "com.librashare.app.entities.CustomStringArrayType")
-    @Column(columnDefinition = "text[]")
-    private List<String> genre;
+    @Column
+    private String genre;
 
 
     public Book(BookDto bookDto) {
-
+        if (bookDto.getBookId() != null) {
+            this.bookId = bookDto.getBookId();
+        }
         if (bookDto.getTitle() != null) {
             this.title = bookDto.getTitle();
         }
@@ -50,6 +50,5 @@ public class Book {
         if (bookDto.getGenre() != null) {
             this.genre = bookDto.getGenre();
         }
-
     }
 }
