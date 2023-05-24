@@ -1,21 +1,26 @@
 package com.librashare.app.entities;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
-import java.sql.*;
+import java.sql.Array;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class CustomStringArrayType<T extends Serializable> implements UserType {
-    protected static final int[] SQL_TYPES = {Types.ARRAY};
-    private Class<T> typeParameterClass;
+public class CustomStringArrayType implements UserType {
+    private static final int[] SQL_TYPES = {java.sql.Types.ARRAY};
+
+    // Default constructor
+    public CustomStringArrayType() {
+    }
 
     @Override
     public Object deepCopy(Object value) throws HibernateException {
@@ -40,61 +45,66 @@ public class CustomStringArrayType<T extends Serializable> implements UserType {
     @SuppressWarnings("unchecked")
     @Override
     public Serializable disassemble(Object value) throws HibernateException {
-        return (T) this.deepCopy(value);
+
+        if (value == null) {
+            return null;
+        }
+        return Arrays.copyOf((String[]) value, ((String[]) value).length);
     }
+
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{Types.ARRAY};
+        return SQL_TYPES;
     }
 
     @Override
-    public Class returnedClass() {
+    public Class<String[]> returnedClass() {
+
         return String[].class;
     }
 
     @Override
-    public Object nullSafeGet(ResultSet resultSet, String[] names, SharedSessionContractImplementor session, Object owner)
-            throws HibernateException, SQLException {
-        if (resultSet.wasNull()) {
-            return null;
-        }
-        if (resultSet.getArray(names[0]) == null) {
-            return new Integer[0];
-        }
 
-        Array array = resultSet.getArray(names[0]);
-        @SuppressWarnings("unchecked")
-        T javaArray = (T) array.getArray();
-        return javaArray;
+    public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner)
+            throws HibernateException, SQLException {
+        if (names != null && names.length > 0 && rs != null && rs.getArray(names[0]) != null) {
+            Array array = rs.getArray(names[0]);
+            return array.getArray();
+        }
+        return null;
     }
 
     @Override
-    public void nullSafeSet(PreparedStatement statement, Object value, int index, SharedSessionContractImplementor session)
+    public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session)
             throws HibernateException, SQLException {
-        Connection connection = statement.getConnection();
-        if (value == null) {
-            statement.setNull(index, SQL_TYPES[0]);
+        if (value != null && st != null) {
+            String[] castObject = (String[]) value;
+            Array array = session.connection().createArrayOf("text", castObject);
+            st.setArray(index, array);
         } else {
-            @SuppressWarnings("unchecked")
-            T castObject = (T) value;
-            Array array = connection.createArrayOf("integer", (Object[]) castObject);
-            statement.setArray(index, array);
+            st.setNull(index, SQL_TYPES[0]);
+
         }
     }
 
     @Override
     public boolean equals(Object x, Object y) throws HibernateException {
 
-        if (x == null) {
-            return y == null;
+        if (x == y) {
+            return true;
         }
-        return x.equals(y);
+        if (x == null || y == null) {
+            return false;
+        }
+        return Arrays.equals((String[]) x, (String[]) y);
     }
+
 
     @Override
     public int hashCode(Object x) throws HibernateException {
-        return x.hashCode();
+        return Arrays.hashCode((String[]) x);
+
     }
 
 }
