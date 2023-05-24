@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
-import mainImg from '../../images/library-main.png';
+import './LandingPage.css';
 
-const HomePage = () => {
+const LandingPage = () => {
   const [showShading, setShowShading] = useState(true);
   const [showWebsite, setShowWebsite] = useState(false);
   const shadingControls = useAnimation();
@@ -26,12 +26,8 @@ const HomePage = () => {
     }
   }, [showShading, contentControls]);
 
-  const handleLoginClick = () => {
-    navigate('/login');
-  };
-
-  const handleSignUpClick = () => {
-    navigate('/signup');
+  const handleRegisterClick = () => {
+    navigate('/register');
   };
 
   return (
@@ -61,15 +57,9 @@ const HomePage = () => {
           <div className="log-sig-btn-container">
             <button
               className="btn btn-primary main-color-btn home-btn"
-              onClick={handleLoginClick}
+              onClick={handleRegisterClick}
             >
-              Log In
-            </button>
-            <button
-              className="btn btn-primary main-color-btn home-btn"
-              onClick={handleSignUpClick}
-            >
-              Sign Up
+              Register / Log In
             </button>
           </div>
         </motion.div>
@@ -78,4 +68,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default LandingPage;
