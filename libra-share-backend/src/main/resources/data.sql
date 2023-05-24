@@ -1,3 +1,4 @@
+
 INSERT INTO Book (title, description, image, author, isbn, genre)
 VALUES ('To Kill a Mockingbird',
         'A classic novel set in the 1930s South, examining the issues of racial inequality and loss of innocence.',
@@ -53,3 +54,4 @@ VALUES ('To Kill a Mockingbird',
         'Homer''s epic poem recounting the adventures of Odysseus during his return from the Trojan War.',
         'https://m.media-amazon.com/images/I/51S8fUZ6nfL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg', 'Homer',
         '9780143039952', ARRAY['Epic']);
+

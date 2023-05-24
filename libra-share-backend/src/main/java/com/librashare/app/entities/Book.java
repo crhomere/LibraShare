@@ -1,11 +1,9 @@
 package com.librashare.app.entities;
-
 import com.librashare.app.dtos.BookDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 
 @Data
@@ -16,8 +14,9 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
-
+  
     private String title;
+  
     @Column(columnDefinition = "TEXT")
     private String description;
 
@@ -29,8 +28,8 @@ public class Book {
 
     @Type(type = "com.librashare.app.entities.CustomStringArrayType")
     @Column(columnDefinition = "text[]")
-//    @Column
     private String[] genre;
+
 
 
     public Book(BookDto bookDto) {

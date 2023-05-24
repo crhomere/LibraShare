@@ -1,6 +1,4 @@
 package com.librashare.app.services;
-
-
 import com.librashare.app.dtos.UserDto;
 import com.librashare.app.entities.User;
 import com.librashare.app.repositories.UserRepository;
@@ -8,7 +6,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -65,6 +62,7 @@ public class UserService {
             } catch (Exception e) {
                 return "Error while saving user";
             }
+
         }
     }
 

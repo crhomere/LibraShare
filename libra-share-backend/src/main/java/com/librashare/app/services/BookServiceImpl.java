@@ -1,5 +1,4 @@
 package com.librashare.app.services;
-
 import com.librashare.app.dtos.BookDto;
 import com.librashare.app.entities.Book;
 import com.librashare.app.repositories.BookRepository;
@@ -18,11 +17,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
-
 
     @Override
     @Transactional
@@ -51,6 +50,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
+
     public String addBook(BookDto bookDto) {
 
         Optional<Book> bookOptional = bookRepository.findByIsbn(bookDto.getIsbn());
@@ -102,6 +102,7 @@ public class BookServiceImpl implements BookService {
                 return "Error while saving book. Please enter valid ISBN";
             }
         }
+
     }
 
     @Override
@@ -118,6 +119,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
+
     public String updateBookById(BookDto bookDto) {
         Optional<Book> bookOptional = bookRepository.findById(bookDto.getBookId());
         if (bookOptional.isPresent()) {
@@ -164,4 +166,5 @@ public class BookServiceImpl implements BookService {
 //            throw new RuntimeException("Book not found with id: " + bookId);
 //        }
 //    }
+
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.io.Serializable;
 
 @Data
@@ -16,6 +17,7 @@ public class BookDto implements Serializable {
     private String description;
     private String image;
     private String author;
+
     private String isbn;
     private String[] genre;
 

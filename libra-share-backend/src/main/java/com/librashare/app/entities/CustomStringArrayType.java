@@ -1,5 +1,6 @@
 package com.librashare.app.entities;
 
+
 import lombok.Data;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -44,6 +45,7 @@ public class CustomStringArrayType implements UserType {
     @SuppressWarnings("unchecked")
     @Override
     public Serializable disassemble(Object value) throws HibernateException {
+
         if (value == null) {
             return null;
         }
@@ -58,10 +60,12 @@ public class CustomStringArrayType implements UserType {
 
     @Override
     public Class<String[]> returnedClass() {
+
         return String[].class;
     }
 
     @Override
+
     public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner)
             throws HibernateException, SQLException {
         if (names != null && names.length > 0 && rs != null && rs.getArray(names[0]) != null) {
@@ -80,11 +84,13 @@ public class CustomStringArrayType implements UserType {
             st.setArray(index, array);
         } else {
             st.setNull(index, SQL_TYPES[0]);
+
         }
     }
 
     @Override
     public boolean equals(Object x, Object y) throws HibernateException {
+
         if (x == y) {
             return true;
         }
@@ -98,6 +104,7 @@ public class CustomStringArrayType implements UserType {
     @Override
     public int hashCode(Object x) throws HibernateException {
         return Arrays.hashCode((String[]) x);
+
     }
 
 }

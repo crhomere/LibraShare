@@ -1,7 +1,5 @@
 package com.librashare.app.services;
-
 import com.librashare.app.dtos.BookDto;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,5 +18,6 @@ public interface BookService {
 //    void checkoutBook(Long bookId);
 //
 //    void returnBook(Long bookId);
+
 
 }
