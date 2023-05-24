@@ -30,7 +30,6 @@ public class User {
     private String zipcode;
     private String latitude;
     private String longitude;
-    @Column(unique = true)
     private String username;
 
     public User(UserDto userDto) {

@@ -21,7 +21,7 @@ public class Request {
     private Date lastModified;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userCopyId", referencedColumnName  = "userCopyId")
+    @JoinColumn(name = "userCopyId", referencedColumnName = "userCopyId")
     private UserCopy userCopy;
 
     @OneToOne(fetch = FetchType.LAZY)
