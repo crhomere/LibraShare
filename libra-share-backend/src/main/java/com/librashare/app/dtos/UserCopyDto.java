@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserCopyDto implements Serializable {
     private Long userCopyId;
-    private Date lastExchangedDate;
+    private LocalDate lastExchangedDate;
     private Boolean exchangeReady;
 
     public UserCopyDto(UserCopy userCopy) {
