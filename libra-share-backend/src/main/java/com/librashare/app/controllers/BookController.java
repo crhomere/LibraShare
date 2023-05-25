@@ -1,6 +1,6 @@
 package com.librashare.app.controllers;
 import com.librashare.app.dtos.BookDto;
-import com.librashare.app.services.BookService;
+import com.librashare.app.services.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -10,33 +10,33 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/books")
 public class BookController {
-    @Autowired
-    private BookService bookService;
 
-    // CRUD endpoints
+    @Autowired
+    private BookServiceImpl bookServiceImpl;
+
     @GetMapping("/{bookId}")
     public Optional<BookDto> getBookById(@PathVariable Long bookId) {
-        return bookService.getBookById(bookId);
+        return bookServiceImpl.getBookById(bookId);
     }
 
     @GetMapping("/all")
     public List<BookDto> getAllBooks() {
-        return bookService.getAllBooks();
+        return bookServiceImpl.getAllBooks();
     }
 
-    @PostMapping("/add")
-    public String addBook(@RequestBody BookDto bookDto) {
-        return bookService.addBook(bookDto);
+    @PostMapping("/{userId}/add")
+    public String addBook(@PathVariable Long userId, @RequestBody BookDto bookDto) {
+        return bookServiceImpl.addBook(bookDto, userId);
     }
 
-    @DeleteMapping("/{bookId}")
-    public void deleteBook(@PathVariable Long bookId) {
-        bookService.deleteBookById(bookId);
+    @DeleteMapping("/{userId}/{bookId}")
+    public String deleteBook(@PathVariable Long userId, @PathVariable Long bookId) {
+        return bookServiceImpl.deleteBookById(userId, bookId);
     }
 
     @PutMapping("/{bookId}")
     public void updateBook(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
         bookDto.setBookId(bookId);
-        bookService.updateBookById(bookDto);
+        bookServiceImpl.updateBookById(bookDto);
     }
 }

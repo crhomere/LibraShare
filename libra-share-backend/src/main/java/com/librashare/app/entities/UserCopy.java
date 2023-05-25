@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -16,8 +16,7 @@ public class UserCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userCopyId;
-
-    private Date lastExchangedDate;
+    private LocalDate lastExchangedDate;
     private Boolean exchangeReady;
 
     @OneToOne(fetch = FetchType.LAZY)

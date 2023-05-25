@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +16,7 @@ public class RatingDto implements Serializable {
     private String username;
     private String comment;
     private Integer rating;
-    private Date lastModified;
+    private LocalDateTime lastModified;
 
     public RatingDto(Rating rating) {
         if (rating.getRatingId() != null) {
