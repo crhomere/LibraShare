@@ -1,7 +1,13 @@
 package com.librashare.app.services;
+
 import com.librashare.app.dtos.BookDto;
+import com.librashare.app.dtos.UserCopyDto;
 import com.librashare.app.entities.Book;
+import com.librashare.app.entities.User;
+import com.librashare.app.entities.UserCopy;
 import com.librashare.app.repositories.BookRepository;
+import com.librashare.app.repositories.UserCopyRepository;
+import com.librashare.app.repositories.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +18,24 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl {
     @Autowired
     private BookRepository bookRepository;
 
-    @Override
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserCopyRepository userCopyRepository;
+
+
     @Transactional
     public Optional<BookDto> getBookById(Long bookId) {
         Optional<Book> bookOptional = bookRepository.findById(bookId);
@@ -36,7 +48,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    @Override
+
     @Transactional
     public List<BookDto> getAllBooks() {
         List<Book> books = bookRepository.findAll();
@@ -48,13 +60,16 @@ public class BookServiceImpl implements BookService {
         return bookDtos;
     }
 
-    @Override
-    @Transactional
 
-    public String addBook(BookDto bookDto) {
+    @Transactional
+    public String addBook(BookDto bookDto, Long userId) {
 
         Optional<Book> bookOptional = bookRepository.findByIsbn(bookDto.getIsbn());
-        if (bookOptional.isPresent()) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        Long savedBookId = bookOptional.map(book1 -> book1.getBookId()).orElse(0L);
+        Optional<UserCopy> userCopyOptional = userCopyRepository.findByUserIdAndBookId(userId, savedBookId);
+
+        if (userCopyOptional.isPresent()) {
             return "This book is already present. Please create a new book ";
 
         } else {
@@ -96,46 +111,54 @@ public class BookServiceImpl implements BookService {
                     break;
                 }
                 Book book = new Book(bookDto);
-                bookRepository.saveAndFlush(book);
+                Book savedBook = bookRepository.saveAndFlush(book);
+                Long bookId = savedBook.getBookId();
+                createUserCopy(userId, bookId);
                 return "Successfully added book";
             } catch (Exception e) {
                 return "Error while saving book. Please enter valid ISBN";
             }
         }
-
     }
 
-    @Override
+
     @Transactional
-    public void deleteBookById(Long bookId) {
+    public String deleteBookById(Long userId, Long bookId) {
         Optional<Book> bookOptional = bookRepository.findById(bookId);
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
             bookRepository.delete(book);
+            deleteUserCopy(userId, bookId);
+            return "Successfully deleted book";
         } else {
-            throw new RuntimeException("Book not found with id: " + bookId);
+            return "Book not found";
         }
     }
 
-    @Override
-    @Transactional
 
+    @Transactional
     public String updateBookById(BookDto bookDto) {
         Optional<Book> bookOptional = bookRepository.findById(bookDto.getBookId());
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
-            if( bookDto.getTitle() != null) {
-            book.setTitle(bookDto.getTitle());}
-            if( bookDto.getDescription() != null) {
-            book.setDescription(bookDto.getDescription());}
-            if( bookDto.getImage() != null) {
-            book.setImage(bookDto.getImage());}
-            if( bookDto.getAuthor() != null) {
-            book.setAuthor(bookDto.getAuthor());}
-            if( bookDto.getIsbn() != null) {
-            book.setIsbn(bookDto.getIsbn());}
-            if( bookDto.getGenre() != null) {
-            book.setGenre(bookDto.getGenre());}
+            if (bookDto.getTitle() != null) {
+                book.setTitle(bookDto.getTitle());
+            }
+            if (bookDto.getDescription() != null) {
+                book.setDescription(bookDto.getDescription());
+            }
+            if (bookDto.getImage() != null) {
+                book.setImage(bookDto.getImage());
+            }
+            if (bookDto.getAuthor() != null) {
+                book.setAuthor(bookDto.getAuthor());
+            }
+            if (bookDto.getIsbn() != null) {
+                book.setIsbn(bookDto.getIsbn());
+            }
+            if (bookDto.getGenre() != null) {
+                book.setGenre(bookDto.getGenre());
+            }
             bookRepository.saveAndFlush(book);
             return "Successfully Updated Book";
         } else {
@@ -143,28 +166,35 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-//    @Override
-//    @Transactional
-//    public void checkoutBook(Long bookId) {
-//        Optional<Book> bookOptional = bookRepository.findById(bookId);
-//        if (bookOptional.isPresent()) {
-//            Book book = bookOptional.get();
-//            bookRepository.saveAndFlush(book);
-//        } else {
-//            throw new RuntimeException("Book not found with id: " + bookId);
-//        }
-//    }
+    public void createUserCopy(Long userId, Long bookId) {
+        User user = userRepository.findById(userId).orElse(null);
+        Book book = bookRepository.findById(bookId).orElse(null);
+        LocalDate lastExchangedDate = LocalDate.of(1900, 1, 1);
+        Boolean exchangeReady = true;
 
-//    @Override
-//    @Transactional
-//    public void returnBook(Long bookId) {
-//        Optional<Book> bookOptional = bookRepository.findById(bookId);
-//        if (bookOptional.isPresent()) {
-//            Book book = bookOptional.get();
-//            bookRepository.saveAndFlush(book);
-//        } else {
-//            throw new RuntimeException("Book not found with id: " + bookId);
-//        }
-//    }
+        if (user != null && book != null) {
+            UserCopyDto userCopyDto = new UserCopyDto();
+            userCopyDto.setExchangeReady(exchangeReady);
+            userCopyDto.setLastExchangedDate(lastExchangedDate);
 
+            UserCopy userCopy = new UserCopy(userCopyDto);
+            userCopy.setUserCopyUser(user);
+            userCopy.setUserCopyBook(book);
+
+            userCopyRepository.saveAndFlush(userCopy);
+        } else {
+            throw new RuntimeException("Error creating user copy");
+        }
+    }
+
+    public void deleteUserCopy(Long userId, Long bookId) {
+        Optional<UserCopy> userCopyOptional = userCopyRepository.findByUserIdAndBookId(userId, bookId);
+        if (userCopyOptional.isPresent()) {
+            UserCopy userCopy = userCopyOptional.get();
+            userCopyRepository.delete(userCopy);
+        } else {
+            throw new RuntimeException("user copy not found");
+        }
+
+    }
 }
