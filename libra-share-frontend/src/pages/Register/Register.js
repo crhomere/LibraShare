@@ -23,7 +23,7 @@ const initialState = {
   isMember: true,
 };
 
-const Register = () => {
+const Register = ({ setShowNavbar }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [formData, setFormData] = useState(initialState);
@@ -58,6 +58,7 @@ const Register = () => {
 
     if (isMember) {
       dispatch(loginUser({ email, password }));
+      setShowNavbar(true);
       navigate('/home');
       return;
     }
@@ -79,7 +80,7 @@ const Register = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       isMember: true,
-    }))
+    }));
   };
 
   const toggleMember = () => {
