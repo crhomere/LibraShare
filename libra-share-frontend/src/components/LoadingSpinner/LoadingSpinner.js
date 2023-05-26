@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const LoadingSpinner = () => {
-  return (
-    <div>LoadingSpinner</div>
-  )
-}
+  return <div>LoadingSpinner</div>;
+};
 
-export default LoadingSpinner
+export default LoadingSpinner;

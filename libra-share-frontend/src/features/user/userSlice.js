@@ -35,11 +35,6 @@ export const registerUser = createAsyncThunk(
       }
 console.log(user);
       return user;
-      // console.log(resp);
-      // const data = await resp.json();
-      // console.log(`Register User : ${JSON.stringify(user)}`);
-      // console.log(`resp.data : ${JSON.stringify(data)}`);
-      // return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
