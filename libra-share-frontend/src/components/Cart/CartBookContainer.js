@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
-import CartBook from '../CartBook/CartBook';
+import BookCard from '../BookCard/BookCard';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { calculateTotals, getCartBooks } from '../../features/cart/cartSlice';
+import { calculateTotals, getCartBooks } from '../../../../features/cart/cartSlice';
 
-import ModalRemoveAll from '../ModalRemoveAll/ModalRemoveAll';
-import { openModal } from '../../features/modalRemoveAll/modalRemoveAllSlice';
+import ModalRemoveAll from '../../../ModalRemoveAll/ModalRemoveAll';
+import { openModal } from '../../../../features/modalRemoveAll/modalRemoveAllSlice';
 
 const CartBookContainer = () => {
   const { cartItems, total, isLoading } = useSelector((state) => state.cart);
@@ -49,7 +49,7 @@ const CartBookContainer = () => {
       </header>
       <div>
         {cartItems.map((item) => {
-          return <CartBook key={item.id} {...item} />;
+          return <BookCard key={item.id} {...item} />;
         })}
       </div>
       <footer>
