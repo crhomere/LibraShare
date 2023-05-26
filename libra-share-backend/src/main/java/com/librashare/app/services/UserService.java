@@ -73,8 +73,9 @@ public class UserService {
 
         if (userOptional.isPresent()) {
             if (passwordEncoder.matches(userDto.getPassword(), userOptional.get().getPassword())) {
-                response.add("http://localhost:8080/home.html");
+//                response.add("http://localhost:8080/home.html");
                 response.add(String.valueOf(userOptional.get().getUserId()));
+                response.add(userOptional.get().getFirstName());
             } else {
                 response.add("Username or password incorrect");
             }
