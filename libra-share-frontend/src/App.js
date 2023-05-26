@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
-import EntryPage from './pages/LandingPage/LandingPage';
+import EntryPage from './pages/EntryPage/EntryPage';
 import HomePage from './pages/HomePage/HomePage';
 import Register from './pages/Register/Register';
 import Navbar from './components/Navbar/Navbar';
@@ -33,7 +33,7 @@ const App = () => {
         {showNavbar && <Navbar />}
         <Routes>
           <Route path="/" element={<EntryPage />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register  setShowNavbar={setShowNavbar} />} />
           <Route path="/home" element={<HomePage />} />
 
           <Route path="*" element={<ErrorPage />} />

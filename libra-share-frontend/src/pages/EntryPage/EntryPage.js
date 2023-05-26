@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import '../../App.css';
-import './LandingPage.css';
+import './EntryPage.css';
 
 const LandingPage = () => {
   const [showShading, setShowShading] = useState(true);
@@ -43,6 +43,8 @@ const LandingPage = () => {
             Enter Library
           </button>
         </motion.div>
+
+        
       )}
 
       {showWebsite && (
