@@ -1,9 +1,9 @@
-import React from 'react'
+import { useSelector } from 'react-redux';
 
 const UserProfile = () => {
-  return (
-    <div>UserProfile</div>
-  )
-}
+  
+  const { user } = useSelector((store) => store.user);
+  return <div>Hello {user.username}!</div>;
+};
 
-export default UserProfile
+export default UserProfile;

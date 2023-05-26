@@ -1,13 +1,14 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../../assets/images/logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
   const { total } = useSelector((store) => store.cart);
-
-  // Rest of the code...
+  const { user } = useSelector((store) => store.user);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,12 +37,21 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="d-flex align-items-center">
-            <p className="me-3">
-              <span className="d-lg-none">Cart:</span>
-              <span className="d-none d-lg-inline">Books in your cart: </span>
-              {total}
-            </p>
-            {/* Rest of the code */}
+            <Link className="nav-link" to={`/user-profile/${user.id}`}>
+              <p className="me-3">
+                {user && user.username
+                  ? user.username.charAt(0).toUpperCase() +
+                    user.username.slice(1)
+                  : ''}
+              </p>
+            </Link>
+            <Link className="nav-link" to="/cart">
+              <p className="me-3">
+                <FontAwesomeIcon icon={faBook} />
+                <span> </span>
+                {total}
+              </p>
+            </Link>
           </div>
         </div>
       </div>
