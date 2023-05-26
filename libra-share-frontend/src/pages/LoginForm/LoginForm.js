@@ -3,11 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { Container, Form, Button } from 'react-bootstrap';
 
-
-
 const LoginForm = () => {
   const navigate = useNavigate();
-
 
   const [formData, setFormData] = useState({
     username: '',
@@ -44,7 +41,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className='form-container-login'>
+    <div className="form-container-login">
       <Container
         className="my-5 py-3 "
         style={{

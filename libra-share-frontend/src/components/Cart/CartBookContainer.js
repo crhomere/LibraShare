@@ -3,7 +3,10 @@ import { useEffect } from 'react';
 import BookCard from '../BookCard/BookCard';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { calculateTotals, getCartBooks } from '../../../../features/cart/cartSlice';
+import {
+  calculateTotals,
+  getCartBooks,
+} from '../../../../features/cart/cartSlice';
 
 import ModalRemoveAll from '../../../ModalRemoveAll/ModalRemoveAll';
 import { openModal } from '../../../../features/modalRemoveAll/modalRemoveAllSlice';

@@ -9,11 +9,6 @@ const initialState = {
   isLoading: true,
 };
 
-// export const getCartBooks = createAsyncThunk('cart/getCartBooks', () => {
-//   return fetch(url)
-//     .then((response) => response.json())
-//     .catch((error) => console.log(error));
-// });
 export const getCartBooks = createAsyncThunk('cart/getCartBooks', async () => {
   try {
     const response = await axios(url);
