@@ -33,26 +33,10 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate('/home');
-  //   }
-  // }, [user, navigate]);
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  // useEffect(() => {
-  //   if (successMessage) {
-  //     setFormData((prevFormData) => ({
-  //       ...prevFormData,
-  //       isMember: true,
-  //     }));
-  //     window.location.reload()
-  //   }
-  // }, [successMessage]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -95,7 +79,7 @@ const Register = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       isMember: true,
-    }));
+    }))
   };
 
   const toggleMember = () => {
