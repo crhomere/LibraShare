@@ -59,7 +59,7 @@ const Register = ({ setShowNavbar }) => {
     if (isMember) {
       dispatch(loginUser({ email, password }));
       setShowNavbar(true);
-      navigate('/home');
+      navigate('/dash');
       return;
     }
 
