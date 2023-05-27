@@ -1,9 +1,11 @@
+
 .nav-link {
   color: #2e302f;
 }
 
 .nav-link:hover {
-    color: rgb(201,181,159);
+  color: rgb(201, 181, 159);
+  cursor: pointer;
 }
 
 .nav-link:active,
