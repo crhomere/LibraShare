@@ -33,7 +33,7 @@ export const registerUser = createAsyncThunk(
         const errorData = await resp.json();
         return thunkAPI.rejectWithValue(errorData.msg);
       }
-console.log(user);
+      console.log(user);
       return user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -61,6 +61,18 @@ export const loginUser = createAsyncThunk(
       const data = await resp.json();
       console.log(data);
       return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  'user/logoutUser',
+  async (_, thunkAPI) => {
+    try {
+      removeUserFromLocalStorage();
+      return null;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -96,6 +108,16 @@ const userSlice = createSlice({
         addUserToLocalStorage(state.user);
       })
       .addCase(loginUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = null;
+      })
+      .addCase(logoutUser.rejected, (state, { payload }) => {
         state.isLoading = false;
       });
   },

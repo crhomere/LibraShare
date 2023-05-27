@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { logoutUser } from '../../features/user/userSlice';
 
 import logo from '../../assets/images/logo.png';
 import './Navbar.css';
@@ -10,10 +12,25 @@ const Navbar = () => {
   const { total } = useSelector((store) => store.cart);
   const { user } = useSelector((store) => store.user);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    setIsDropdownOpen(false);
+    navigate('/');
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prevState) => !prevState);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/dash">
           <img src={logo} alt="Libra Share" style={{ width: '6rem' }} />
         </Link>
         <button
@@ -30,21 +47,32 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
+              <Link className="nav-link" to="/dash">
                 <span className="d-lg-none">My Books</span>
                 <span className="d-none d-lg-inline">My Books</span>
               </Link>
             </li>
           </ul>
           <div className="d-flex align-items-center">
-            <Link className="nav-link" to={`/user-profile/${user.id}`}>
+            <div
+              className="nav-link dropdown"
+              onMouseEnter={toggleDropdown}
+              onMouseLeave={toggleDropdown}
+            >
               <p className="me-3">
                 {user && user.username
                   ? user.username.charAt(0).toUpperCase() +
                     user.username.slice(1)
                   : ''}
               </p>
-            </Link>
+              {isDropdownOpen && (
+                <div className="dropdown-menu show">
+                  <button className="dropdown-item" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
             <Link className="nav-link" to="/cart">
               <p className="me-3">
                 <FontAwesomeIcon icon={faBook} />
