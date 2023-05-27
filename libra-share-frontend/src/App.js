@@ -29,7 +29,7 @@ const App = () => {
   return (
     <div className="app">
       <Router>
-        {showNavbar && <Navbar />}
+        {showNavbar && <Navbar setShowNavbar={setShowNavbar}  />}
         <Routes>
           <Route path="/" element={<EntryPage />} />
           <Route path="/register" element={<Register setShowNavbar={setShowNavbar} />} />
