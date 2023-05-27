@@ -8,3 +8,8 @@
   cursor: pointer;
   background-color: rgb(249, 215, 161);
 }
+
+#map-container{
+  height: 0 !important;
+  min-height: 5rem ;
+}
