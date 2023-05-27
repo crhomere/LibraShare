@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 
+import './SearchBar.css';
+
 const SearchBar = () => {
   const users = [
     { id: 1, lat: 37.7749, lng: -122.4194 }, // San Francisco
@@ -14,21 +16,6 @@ const SearchBar = () => {
     { id: 10, lat: 47.6062, lng: -122.3321 }, // Seattle
   ];
 
-  // useEffect(() => {
-  //   const map = new window.google.maps.Map(document.getElementById('map-container'), {
-  //     center: { lat: 0, lng: 0 }, // initial map center coordinates
-  //     zoom: 10, // initial zoom level
-  //   });
-
-  //   // Add markers for each user
-  //   users.forEach(user => {
-  //     new window.google.maps.Marker({
-  //       position: { lat: user.lat, lng: user.lng },
-  //       map: map,
-  //     });
-  //   });
-  // }, []);
-
   return (
     <div>
       <div className="container">
@@ -38,10 +25,16 @@ const SearchBar = () => {
               <input
                 className="form-control me-2"
                 type="search"
-                placeholder="Search"
+                placeholder="Enter Zip code"
                 aria-label="Search"
               />
-              <button className="btn btn-primary" type="submit">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Enter book title"
+                aria-label="Search"
+              />
+              <button className="btn search-book-btn" type="submit">
                 Search
               </button>
             </form>

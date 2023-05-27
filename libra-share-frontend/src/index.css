@@ -4,6 +4,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   font-family: 'Montserrat', sans-serif;
+  /* background-color: #F7F6F6; */
 }
 
 .form-control:focus {

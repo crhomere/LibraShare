@@ -1,11 +1,20 @@
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import UserAccountNav from './UserAccountNav';
+import AccountDetails from './AccountDetails';
+import UserBooks from './UserBooks';
 
 const UserProfile = () => {
-  const { user } = useSelector((store) => store.user);
-  return <div>
-    <h1 className="text-center">Account details</h1>
-    <h3 className="text-center">My books</h3>
-    </div>;
+  return (
+    <div>
+      <UserAccountNav />
+      <Routes>
+        <Route index element={<AccountDetails />} />
+        <Route path="/books" element={<UserBooks />} />
+      </Routes>
+    </div>
+  );
 };
 
 export default UserProfile;
