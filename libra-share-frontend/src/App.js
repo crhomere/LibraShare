@@ -41,7 +41,6 @@ const App = () => {
           <Route path="/library" element={<BookList />} />
           <Route path="/books/:bookId" element={<BookDetails />} />
           <Route path="/books/:bookId/review" element={<ReviewForm />} />
-          <Route path="/user/books" element={<UserBooks />} />
           <Route path="/search" element={<SearchBar />} />
         </Routes>
       </Router>

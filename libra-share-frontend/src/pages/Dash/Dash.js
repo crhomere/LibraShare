@@ -6,6 +6,8 @@ import HomePage from '../HomePage/HomePage';
 import UserProfile from '../../components/UserProfile/UserProfile';
 import AddBook from '../../components/AddBook/AddBook';
 
+import './Dash.css';
+
 const Dash = () => {
   return (
     <Row className="h-100">
@@ -18,8 +20,8 @@ const Dash = () => {
       </Col>
       <Col xs={9}>
         <Routes>
-          <Route index element={<HomePage />} />
-          <Route path="user-profile/:userId" element={<UserProfile />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="user-profile/:userId/*" element={<UserProfile />} />
           <Route path="add-book" element={<AddBook />} />
         </Routes>
       </Col>
