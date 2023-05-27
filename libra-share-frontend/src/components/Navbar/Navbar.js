@@ -8,7 +8,7 @@ import { logoutUser } from '../../features/user/userSlice';
 import logo from '../../assets/images/logo.png';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ setShowNavbar }) => {
   const { total } = useSelector((store) => store.cart);
   const { user } = useSelector((store) => store.user);
 
@@ -20,6 +20,7 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
     setIsDropdownOpen(false);
+    setShowNavbar(false);
     navigate('/');
   };
 
