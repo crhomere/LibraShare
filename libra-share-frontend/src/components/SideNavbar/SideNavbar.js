@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import './SideNavbar.css'
+
 const SideNavbar = () => {
   const { user } = useSelector((store) => store.user);
   return (
