@@ -14,7 +14,7 @@ const SideNavbar = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to={`/dash/user-profile/${user.id}`}>
+          <Link className="nav-link" to={`/dash/user-profile/${user?.id}`}>
             User Profile
           </Link>
         </li>
