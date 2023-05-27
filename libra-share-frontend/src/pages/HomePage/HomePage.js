@@ -4,8 +4,8 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 const HomePage = () => {
   return (
     <div>
+      <h1 className="text-center">Loibrary Books</h1>
       <SearchBar />
-      <div>LIbrary Books</div>
     </div>
   );
 };
