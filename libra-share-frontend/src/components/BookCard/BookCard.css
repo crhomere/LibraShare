@@ -1,0 +1,34 @@
+.book-card-container {
+  margin-bottom: 3rem;
+}
+.book-card {
+  height: 100%;
+  border: none;
+}
+
+.book-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  padding-left: 1rem;
+}
+
+.book-card-image {
+  object-fit: fill;
+  object-fit: contain;
+  height: 230px;
+  margin-bottom: .7rem;
+}
+
+.book-card .card-title {
+  font-size: 15px;
+
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.book-card .card-text {
+  font-size: 12px;
+  margin-bottom: 0;
+}

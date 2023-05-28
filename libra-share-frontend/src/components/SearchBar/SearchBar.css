@@ -6,7 +6,8 @@
 
 .search-book-btn:hover {
   cursor: pointer;
-  background-color: rgb(249, 215, 161);
+  background-color: rgb(195,176,144);
+
 }
 
 #map-container{

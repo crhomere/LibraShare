@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllBooks } from '../../features/book/bookSlice';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import BookCard from '../../components/BookCard/BookCard';
+import { Row, Col } from 'react-bootstrap';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -21,13 +23,15 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1 className="text-center">Library Books</h1>
+      <h1>Library Books</h1>
       <SearchBar />
-      <ul>
+      <Row>
         {books.map((book) => (
-          <li key={book.id}>{book.title}</li>
+          <Col key={book.id} sm={4}>
+            <BookCard {...book} genre={book.genre[0]} />
+          </Col>
         ))}
-      </ul>
+      </Row>
     </div>
   );
 };

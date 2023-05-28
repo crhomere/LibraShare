@@ -1,4 +1,7 @@
 .dash-container {
-  min-height: 65vh !important;
+  margin-top: 5rem;
 }
 
+.side-nav-container {
+  margin-top: 10rem;
+}
