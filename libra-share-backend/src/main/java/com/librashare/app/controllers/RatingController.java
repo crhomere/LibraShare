@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/ratings")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RatingController {
     @Autowired
     private RatingService ratingService;
