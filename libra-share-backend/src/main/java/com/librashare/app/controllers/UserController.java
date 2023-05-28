@@ -7,8 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/users")
@@ -36,11 +37,8 @@ public class UserController {
     }
 
 
-
-
-
     @PostMapping("/login")
-    public List<String> userLogin(@RequestBody UserDto userDto) {
+    public Optional<UserDto> userLogin(@RequestBody UserDto userDto) {
         return userService.userLogin(userDto);
     }
 }

@@ -1,7 +1,9 @@
 package com.librashare.app.services;
 
 import com.librashare.app.dtos.BookDto;
+import com.librashare.app.dtos.UserBookDto;
 import com.librashare.app.dtos.UserCopyDto;
+import com.librashare.app.dtos.UserDto;
 import com.librashare.app.entities.Book;
 import com.librashare.app.entities.User;
 import com.librashare.app.entities.UserCopy;
@@ -19,10 +21,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Service
 public class BookServiceImpl {
@@ -141,21 +142,21 @@ public class BookServiceImpl {
         Optional<Book> bookOptional = bookRepository.findById(bookDto.getBookId());
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
-            if (bookDto.getTitle() != null) {
-                book.setTitle(bookDto.getTitle());
-            }
+//            if (bookDto.getTitle() != null) {
+//                book.setTitle(bookDto.getTitle());
+//            }
             if (bookDto.getDescription() != null) {
                 book.setDescription(bookDto.getDescription());
             }
-            if (bookDto.getImage() != null) {
-                book.setImage(bookDto.getImage());
-            }
+//            if (bookDto.getImage() != null) {
+//                book.setImage(bookDto.getImage());
+//            }
             if (bookDto.getAuthor() != null) {
                 book.setAuthor(bookDto.getAuthor());
             }
-            if (bookDto.getIsbn() != null) {
-                book.setIsbn(bookDto.getIsbn());
-            }
+//            if (bookDto.getIsbn() != null) {
+//                book.setIsbn(bookDto.getIsbn());
+//            }
             if (bookDto.getGenre() != null) {
                 book.setGenre(bookDto.getGenre());
             }
@@ -166,6 +167,8 @@ public class BookServiceImpl {
         }
     }
 
+
+    @Transactional
     public void createUserCopy(Long userId, Long bookId) {
         User user = userRepository.findById(userId).orElse(null);
         Book book = bookRepository.findById(bookId).orElse(null);
@@ -176,7 +179,6 @@ public class BookServiceImpl {
             UserCopyDto userCopyDto = new UserCopyDto();
             userCopyDto.setExchangeReady(exchangeReady);
             userCopyDto.setLastExchangedDate(lastExchangedDate);
-
             UserCopy userCopy = new UserCopy(userCopyDto);
             userCopy.setUserCopyUser(user);
             userCopy.setUserCopyBook(book);
@@ -187,6 +189,7 @@ public class BookServiceImpl {
         }
     }
 
+    @Transactional
     public void deleteUserCopy(Long userId, Long bookId) {
         Optional<UserCopy> userCopyOptional = userCopyRepository.findByUserIdAndBookId(userId, bookId);
         if (userCopyOptional.isPresent()) {
@@ -196,5 +199,66 @@ public class BookServiceImpl {
             throw new RuntimeException("user copy not found");
         }
 
+    }
+
+    public List<UserBookDto> getAllBookByName(BookDto bookDto) {
+        if (bookDto.getTitle() != null && !bookDto.getTitle().isEmpty()) {
+            List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyBookTitle(bookDto.getTitle());
+            return userCopies.stream()
+                    .map(userCopy -> new UserBookDto(
+                            new UserDto(userCopy.getUserCopyUser()),
+                            new BookDto(userCopy.getUserCopyBook()),
+                            userCopy.getExchangeReady(),
+                            userCopy.getLastExchangedDate()
+                    ))
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+
+    }
+
+    public List<UserBookDto> getAllBookByIsbn(BookDto bookDto) {
+        if (bookDto.getIsbn() != null && !bookDto.getIsbn().isEmpty()) {
+            List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyBookIsbn(bookDto.getIsbn());
+            return userCopies.stream()
+                    .map(userCopy -> new UserBookDto(
+                            new UserDto(userCopy.getUserCopyUser()),
+                            new BookDto(userCopy.getUserCopyBook()),
+                            userCopy.getExchangeReady(),
+                            userCopy.getLastExchangedDate()
+                    ))
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
+
+    public List<UserBookDto> getAllBookByZipcode(String zipcode) {
+        if (zipcode != null && !zipcode.isEmpty()) {
+            List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyUserZipcode(zipcode);
+            return userCopies.stream()
+                    .map(userCopy -> new UserBookDto(
+                            new UserDto(userCopy.getUserCopyUser()),
+                            new BookDto(userCopy.getUserCopyBook()),
+                            userCopy.getExchangeReady(),
+                            userCopy.getLastExchangedDate()
+                    ))
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
+
+    public List<UserBookDto> getAllBookByUser(Long userId) {
+        if (userId != null && userId > 0) {
+            List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyUserUserId(userId);
+            return userCopies.stream()
+                    .map(userCopy -> new UserBookDto(
+                            new UserDto(userCopy.getUserCopyUser()),
+                            new BookDto(userCopy.getUserCopyBook()),
+                            userCopy.getExchangeReady(),
+                            userCopy.getLastExchangedDate()
+                    ))
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }

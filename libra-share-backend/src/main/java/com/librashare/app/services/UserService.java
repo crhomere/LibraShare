@@ -13,8 +13,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -67,21 +65,18 @@ public class UserService {
         }
     }
 
-    public List<String> userLogin(UserDto userDto) {
-        List<String> response = new ArrayList<>();
+    public Optional<UserDto> userLogin(UserDto userDto) {
         Optional<User> userOptional = userRepository.findByEmail(userDto.getEmail());
-
         if (userOptional.isPresent()) {
             if (passwordEncoder.matches(userDto.getPassword(), userOptional.get().getPassword())) {
-//                response.add("http://localhost:8080/home.html");
-                response.add(String.valueOf(userOptional.get().getUserId()));
-                response.add(userOptional.get().getFirstName());
+                User user = userOptional.get();
+                UserDto userDTO = new UserDto(user);
+                return Optional.of(userDTO);
             } else {
-                response.add("Username or password incorrect");
+                return Optional.empty();
             }
         } else {
-            response.add("Username or password incorrect");
+            return Optional.empty();
         }
-        return response;
     }
 }

@@ -41,7 +41,7 @@ public class RatingService {
                 rating.setRatingUser(userRepository.findById(userId).orElse(null));
                 rating.setRatingBook(bookRepository.findById(bookId).orElse(null));
                 Rating savedRating = ratingRepository.saveAndFlush(rating);
-                return "Rating added successfully for book " +bookId + " of user " + userId + " with ID: " + savedRating.getRatingId();
+                return "Rating added successfully for book " + bookId + " of user " + userId + " with ID: " + savedRating.getRatingId();
             } else {
                 return "Error user or book missing";
             }
