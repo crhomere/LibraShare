@@ -55,3 +55,24 @@ VALUES ('To Kill a Mockingbird',
         'https://m.media-amazon.com/images/I/51S8fUZ6nfL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg', 'Homer',
         '9780143039952', ARRAY['Epic']);
 
+INSERT INTO users (address_line, city, email, first_name, last_name, latitude, longitude, password, phone_number, state, username, zipcode)
+VALUES
+    ('123 Main Street', 'New York', 'john@example.com', 'John', 'Doe', '40.7128', '-74.0060', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'johndoe', '10001'),
+    ('456 Main Street', 'New York', 'johny@example.com', 'John', 'Doe', '40.7129', '-74.0061', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'johnydoe', '10001'),
+    ('456 Elm Street', 'Los Angeles', 'jane@example.com', 'Jane', 'Smith', '34.0522', '-118.2437', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-5678', 'CA', 'janesmith', '90001'),
+    ('789 Oak Street', 'Chicago', 'michael@example.com', 'Michael', 'Johnson', '41.8781', '-87.6298', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-9012', 'IL', 'michaeljohnson', '60601'),
+    ('321 Pine Street', 'Houston', 'sarah@example.com', 'Sarah', 'Davis', '29.7604', '-95.3698', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-3456', 'TX', 'sarahdavis', '77001'),
+    ('654 Maple Street', 'Philadelphia', 'robert@example.com', 'Robert', 'Brown', '39.9526', '-75.1652', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-7890', 'PA', 'robertbrown', '19101');
+
+INSERT INTO user_copy (last_exchanged_date, exchange_ready, user_id, book_id)
+VALUES
+    ('1900-01-01', true, 1, 1),
+    ('1900-01-01', true, 1, 3),
+    ('1900-01-01', false, 1, 2),
+    ('1900-01-01', true, 2, 4),
+    ('1900-01-01', true, 2, 1),
+    ('1900-01-01', true, 2, 3),
+    ('1900-01-01', true, 3, 2),
+    ('1900-01-01', true, 4, 4),
+    ('1900-01-01', true, 5, 1);
+
