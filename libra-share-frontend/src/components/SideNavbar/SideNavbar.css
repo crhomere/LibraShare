@@ -9,7 +9,8 @@
 }
 
 .nav-link:active,
-.nav-link:focus {
+.nav-link:focus,
+.nav-link:visited{
   color: #2e302f;
   font-weight: bold;
 }

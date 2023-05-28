@@ -1,25 +1,26 @@
-import React from 'react';
-import { removeBookFromCart } from '../../../features/cart/cartSlice';
-import { useDispatch } from 'react-redux';
+import { Card } from 'react-bootstrap';
+import './BookCard.css';
 
-const BookCard = ({ id, img, title, author }) => {
-  const dispatch = useDispatch();
+const BookCard = ({
+  bookId,
+  title,
+  description,
+  image,
+  author,
+  isbn,
+  genre,
+}) => {
   return (
-    <article className="cart-book">
-      <img src={img} alt={title} style={{ height: '200px' }} />
-      <div>
-        <h4>{title}</h4>
-        <h4 className="book-title">{title}</h4>
-        <button className="borrow-btn">borrow</button>
-        <button
-          className="remove-btn"
-          onClick={() => dispatch(removeBookFromCart(id))}
-        >
-          remove
-        </button>
-      </div>
-      <div></div>
-    </article>
+    <div className="book-card-container">
+    <Card className="book-card" style={{ width: '11rem' }}>
+      <Card.Img variant="top" src={image} className="book-card-image" />
+      <Card.Body>
+        <Card.Title>{title}</Card.Title>
+        <Card.Text>Author: {author}</Card.Text>
+        <Card.Text>Genre: {genre}</Card.Text>
+      </Card.Body>
+    </Card>
+    </div>
   );
 };
 

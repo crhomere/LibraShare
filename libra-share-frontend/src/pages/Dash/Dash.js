@@ -10,11 +10,10 @@ import './Dash.css';
 
 const Dash = () => {
   return (
-    <Row className="h-100">
+    <Row className='dash-container'>
       <Col
         xs={3}
-        className="d-flex flex-column justify-content-center align-items-center"
-        style={{ minHeight: '65vh' }}
+        className="d-flex flex-column align-items-center side-nav-container"
       >
         <SideNavbar />
       </Col>
