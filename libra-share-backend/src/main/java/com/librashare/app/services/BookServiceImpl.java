@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Service
 public class BookServiceImpl {
     @Autowired
@@ -166,6 +167,7 @@ public class BookServiceImpl {
         }
     }
 
+
     @Transactional
     public void createUserCopy(Long userId, Long bookId) {
         User user = userRepository.findById(userId).orElse(null);
@@ -177,7 +179,6 @@ public class BookServiceImpl {
             UserCopyDto userCopyDto = new UserCopyDto();
             userCopyDto.setExchangeReady(exchangeReady);
             userCopyDto.setLastExchangedDate(lastExchangedDate);
-
             UserCopy userCopy = new UserCopy(userCopyDto);
             userCopy.setUserCopyUser(user);
             userCopy.setUserCopyBook(book);
@@ -259,6 +260,5 @@ public class BookServiceImpl {
                     .collect(Collectors.toList());
         }
         return Collections.emptyList();
-
     }
 }
