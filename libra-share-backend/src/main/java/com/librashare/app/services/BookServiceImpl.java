@@ -94,12 +94,19 @@ public class BookServiceImpl {
                     JSONObject bookDetailsObject = bookObject.getJSONObject("details");
                     JSONObject detailsObject = bookDetailsObject.getJSONObject("details");
                     String description = detailsObject.optString("description", "N/A");
+                    String[] subjects;
+                    try{
                     JSONArray subjectsArray = detailsObject.getJSONArray("subjects");
-                    String[] subjects = new String[subjectsArray.length()];
+                        subjects = new String[subjectsArray.length()];
 
-                    for (int i = 0; i < subjectsArray.length(); i++) {
-                        subjects[i] = subjectsArray.getString(i);
+                        for (int i = 0; i < subjectsArray.length(); i++) {
+                            subjects[i] = subjectsArray.getString(i);
+                        }
+                    }catch(Exception e){
+                        System.out.println(e.getMessage());
+                        subjects = new String[] {"No object"};
                     }
+
                     JSONArray authorsArray = detailsObject.getJSONArray("authors");
                     JSONObject authorObject = authorsArray.getJSONObject(0);
                     String authorName = authorObject.optString("name", "N/A");
