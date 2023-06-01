@@ -47,38 +47,39 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/dash">
                 <span className="d-lg-none">My Books</span>
-                <span className="d-none d-lg-inline">My Books</span>
+                <span className="d-none d-lg-inline">Library</span>
               </Link>
             </li>
           </ul>
           <div className="d-flex align-items-center">
             <div className='greeting-container'>
               <span>Hello, </span>
-              <Link
-                className="nav-link"
-                to={`/user-profile/${user.id}`}
+              <div
+                className="nav-link dropdown"
                 onMouseEnter={toggleDropdown}
                 onMouseLeave={toggleDropdown}
               >
                 <p className="me-3">
-              
-                  {user && user.username
-                    ? user.username.charAt(0).toUpperCase() +
-                      user.username.slice(1)
-                    : ''}
-              
+                  {user?.firstName?.charAt(0).toUpperCase() +
+                      user?.firstName?.slice(1)
+                    }
                 </p>
                 {isDropdownOpen && (
                   <div
-                    className="dropdown-menu"
-                    style={{ position: 'absolute' }}
+                    className="dropdown-menu show"
+                    style={{
+                      position: 'absolute',
+                      zIndex: 1,
+                      top: '100%',
+                      left: '0',
+                    }}
                   >
                     <button className="dropdown-item" onClick={handleLogout}>
                       Logout
                     </button>
                   </div>
                 )}
-              </Link>
+              </div>
             </div>
             <Link className="nav-link" to="/cart">
               <p className="me-3">
