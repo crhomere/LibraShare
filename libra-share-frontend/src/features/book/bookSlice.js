@@ -29,6 +29,17 @@ export const fetchBooksByUser = createAsyncThunk('books/fetchBooksByUser', async
   }
 });
 
+
+export const createBook = createAsyncThunk('books/createBook', async ({ userId, bookDto }, thunkAPI) => {
+  try {
+    const response = await axios.post(`${BASE_URL_BOOKS}/${userId}/add`, bookDto);
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+
 const bookSlice = createSlice({
   name: 'books',
   initialState: {
@@ -65,7 +76,22 @@ const bookSlice = createSlice({
       .addCase(fetchBooksByUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(createBook.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createBook.fulfilled, (state, action) => {
+        // Update state with the newly created book
+        state.books.push(action.payload);
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(createBook.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      
   },
 });
 
