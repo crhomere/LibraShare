@@ -1,0 +1,5 @@
+.book-card-container {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
