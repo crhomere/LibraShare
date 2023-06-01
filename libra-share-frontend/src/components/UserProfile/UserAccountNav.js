@@ -20,6 +20,14 @@ const UserAccountNav = () => {
             My Books
           </Link>
         </li>
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            to={`/dash/user-profile/${user?.id}/wish-list`}
+          >
+            Wish List
+          </Link>
+        </li>
       </ul>
     </nav>
   );
