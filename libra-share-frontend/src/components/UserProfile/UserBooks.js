@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchBooksByUser } from '../../features/book/bookSlice';
 import BookCardUser from '../../components/BookCard/BookCardUser';
 
+import './UserBooks.css'
+
 const UserBooks = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.user);
@@ -23,8 +25,7 @@ const UserBooks = () => {
   }
 
   return (
-    <div>
-      <h1>UserBooks</h1>
+    <div className='my-book-container'>
       {userBooks?.map((book) => (
         <BookCardUser key={book.bookDto.bookId} {...book.bookDto} />
       ))}
