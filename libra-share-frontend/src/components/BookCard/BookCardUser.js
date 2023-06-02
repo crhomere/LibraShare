@@ -3,24 +3,30 @@ import { useDispatch } from 'react-redux';
 import { Card, Button, Container, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { updateBook } from '../../features/book/bookSlice';
+import { updateBook, deleteBook } from '../../features/book/bookSlice';
+import { useSelector } from 'react-redux';
 
 import './BookCardUser.css';
 
 const BookCardUser = ({ bookId, title, image, author, description, genre }) => {
+  const { user } = useSelector((store) => store.user);
+
   const [showModal, setShowModal] = useState(false);
   const [descriptionUpdate, setDescriptionUpdate] = useState(description);
   const [authorUpdate, setAuthorUpdate] = useState(author);
   const [genreUpdate, setGenreUpdate] = useState(genre[0]);
 
-  console.log(bookId)
+  console.log('user.id', user.id);
+  console.log('bookId', bookId);
 
   const dispatch = useDispatch();
 
-  const handleDelete = () => {};
-
   const handleUpdate = () => {
     setShowModal(true);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteBook({ userId: user.id, bookId: bookId }));
   };
 
   const handleModalClose = () => {
@@ -46,17 +52,18 @@ const BookCardUser = ({ bookId, title, image, author, description, genre }) => {
       <div className="book-info">
         <Card className="book-card">
           <Card.Img variant="top" src={image} className="book-card-image" />
-          <Card.Body>
-            <Card.Title>{title}</Card.Title>
-            <Card.Text>Author: {author}</Card.Text>
-          </Card.Body>
         </Card>
       </div>
+      <div className="book-title">
+        <Card.Title>{title}</Card.Title>
+        <Card.Text>Author: {author}</Card.Text>
+        <Card.Text>Description: {description}</Card.Text>
+      </div>
       <div className="actions">
-        <Button variant="danger" onClick={handleDelete}>
+        <Button className="delete-update-color-btn" onClick={handleDelete}>
           <FontAwesomeIcon icon={faTrashAlt} />
         </Button>
-        <Button variant="primary" onClick={handleUpdate}>
+        <Button className="delete-update-color-btn" onClick={handleUpdate}>
           <FontAwesomeIcon icon={faEdit} />
         </Button>
       </div>
