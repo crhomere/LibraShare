@@ -27,7 +27,7 @@ const PrivateRoute = ({ element }) => {
 };
 
 const App = () => {
-  const [showNavbar, setShowNavbar] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
   const { user } = useSelector((store) => store.user);
   const isLoggedIn = !!user;
 
