@@ -135,7 +135,7 @@ public class BookServiceImpl {
         Optional<Book> bookOptional = bookRepository.findById(bookId);
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
-            bookRepository.delete(book);
+//            bookRepository.delete(book);
             deleteUserCopy(userId, bookId);
             return "Successfully deleted book";
         } else {
