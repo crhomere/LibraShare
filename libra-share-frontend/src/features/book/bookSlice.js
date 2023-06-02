@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-
-
-
 const BASE_URL_BOOKS = 'http://localhost:8080/api/v1/librashare/books';
 const endpointAllBooks = '/all';
 const endpointUserBooks = '/user/';
@@ -20,25 +17,34 @@ export const fetchAllBooks = createAsyncThunk(
   }
 );
 
-export const fetchBooksByUser = createAsyncThunk('books/fetchBooksByUser', async (userId, thunkAPI) => {
-  try {
-    const response = await axios.get(`${BASE_URL_BOOKS}${endpointUserBooks}${userId}`);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const fetchBooksByUser = createAsyncThunk(
+  'books/fetchBooksByUser',
+  async (userId, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL_BOOKS}${endpointUserBooks}${userId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
-
-export const createBook = createAsyncThunk('books/createBook', async ({ userId, bookDto }, thunkAPI) => {
-  try {
-    const response = await axios.post(`${BASE_URL_BOOKS}/${userId}/add`, bookDto);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const createBook = createAsyncThunk(
+  'books/createBook',
+  async ({ userId, bookDto }, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL_BOOKS}/${userId}/add`,
+        bookDto
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
-
+);
 
 const bookSlice = createSlice({
   name: 'books',
@@ -90,8 +96,7 @@ const bookSlice = createSlice({
       .addCase(createBook.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
-      
+      });
   },
 });
 

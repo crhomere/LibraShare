@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import './App.css';
 
 import EntryPage from './pages/EntryPage/EntryPage';
@@ -10,38 +15,54 @@ import Cart from './components/Cart/Cart';
 import BookList from './components/BookList/BookList';
 import BookDetails from './components/BookDetails/BookDetails';
 import ReviewForm from './components/ReviewForm/ReviewForm';
-import UserBooks from './components/UserBooks/UserBooks';
 import SearchBar from './components/SearchBar/SearchBar';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 
-const App = () => {
-  const [showNavbar, setShowNavbar] = useState(true);
+import { useSelector } from 'react-redux';
 
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    if (currentPath === '/' || currentPath === '/register') {
-      setShowNavbar(false);
-    } else {
-      setShowNavbar(true);
-    }
-  }, []);
+const PrivateRoute = ({ element }) => {
+  const { user } = useSelector((store) => store.user);
+
+  return user ? <>{element}</> : <Navigate to="/" />;
+};
+
+const App = () => {
+  const [showNavbar, setShowNavbar] = useState(false);
+  const { user } = useSelector((store) => store.user);
+  const isLoggedIn = !!user;
 
   return (
     <div className="app">
       <Router>
-        {showNavbar && <Navbar setShowNavbar={setShowNavbar}  />}
+        {showNavbar && isLoggedIn && <Navbar setShowNavbar={setShowNavbar} />}
         <Routes>
           <Route path="/" element={<EntryPage />} />
-          <Route path="/register" element={<Register setShowNavbar={setShowNavbar} />} />
-          <Route path="/dash/*" element={<Dash />} />
+          <Route
+            path="/register"
+            element={<Register setShowNavbar={setShowNavbar} />}
+          />
+
+          <Route path="/dash/*" element={<PrivateRoute element={<Dash />} />} />
+
+          <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
+          <Route
+            path="/library"
+            element={<PrivateRoute element={<BookList />} />}
+          />
+          <Route
+            path="/books/:bookId"
+            element={<PrivateRoute element={<BookDetails />} />}
+          />
+          <Route
+            path="/books/:bookId/review"
+            element={<PrivateRoute element={<ReviewForm />} />}
+          />
+          <Route
+            path="/search"
+            element={<PrivateRoute element={<SearchBar />} />}
+          />
 
           <Route path="*" element={<ErrorPage />} />
-
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/library" element={<BookList />} />
-          <Route path="/books/:bookId" element={<BookDetails />} />
-          <Route path="/books/:bookId/review" element={<ReviewForm />} />
-          <Route path="/search" element={<SearchBar />} />
         </Routes>
       </Router>
     </div>

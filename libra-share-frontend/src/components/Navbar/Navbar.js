@@ -52,7 +52,7 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="d-flex align-items-center">
-            <div className='greeting-container'>
+            <div className="greeting-container">
               <span>Hello, </span>
               <div
                 className="nav-link dropdown"
@@ -61,8 +61,7 @@ const Navbar = () => {
               >
                 <p className="me-3">
                   {user?.firstName?.charAt(0).toUpperCase() +
-                      user?.firstName?.slice(1)
-                    }
+                    user?.firstName?.slice(1)}
                 </p>
                 {isDropdownOpen && (
                   <div
