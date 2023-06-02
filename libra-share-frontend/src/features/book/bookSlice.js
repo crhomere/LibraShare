@@ -46,6 +46,20 @@ export const createBook = createAsyncThunk(
   }
 );
 
+export const updateBook = createAsyncThunk(
+  'books/updateBook',
+  async ({ bookId, bookDto }, thunkAPI) => {
+    console.log(bookId);
+    console.log(bookDto);
+    try {
+      const response = await axios.put(`${BASE_URL_BOOKS}/${bookId}`, bookDto);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 const bookSlice = createSlice({
   name: 'books',
   initialState: {
@@ -88,12 +102,31 @@ const bookSlice = createSlice({
         state.error = null;
       })
       .addCase(createBook.fulfilled, (state, action) => {
-        // Update state with the newly created book
         state.books.push(action.payload);
         state.loading = false;
         state.error = null;
       })
       .addCase(createBook.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateBook.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateBook.fulfilled, (state, action) => {
+        console.log();
+        const updatedBook = action.payload;
+        const index = state.books.findIndex(
+          (book) => book.bookId === updatedBook.bookId
+        );
+        if (index !== -1) {
+          state.books[index] = updatedBook;
+        }
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(updateBook.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
