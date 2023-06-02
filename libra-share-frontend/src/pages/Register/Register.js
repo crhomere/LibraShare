@@ -57,9 +57,14 @@ const Register = ({ setShowNavbar }) => {
     console.log(formData);
 
     if (isMember) {
-      dispatch(loginUser({ email, password }));
-      setShowNavbar(true);
-      navigate('/dash');
+      dispatch(loginUser({ email, password }))
+        .unwrap()
+        .then(() => {
+          navigate('/dash');
+          setShowNavbar(true);
+        });
+
+
       return;
     }
 
