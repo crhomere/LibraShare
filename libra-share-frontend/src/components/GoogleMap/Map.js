@@ -1,31 +1,56 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';
+import axios from 'axios';
 
-const GoogleMap = ({ latitude, longitude, zoom }) => {
-  const mapRef = useRef(null);
+const GoogleMap = ({ zipCode, zoom }) => {
+  const [coordinates, setCoordinates] = useState(null);
+  const [mapContainer, setMapContainer] = useState(null);
+  const [apiKey] = useState('AIzaSyBMXY7naDI_g0oU-g_o0_YjpxoXwyL9MT4');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const mapOptions = {
-      center: { lat: latitude, lng: longitude },
-      zoom: zoom,
-    };
+    // Fetch the latitude and longitude based on the zip code using a geocoding service
+    fetchCoordinates(zipCode);
+  }, [zipCode]);
 
-    // Create the map instance
-    const map = new window.google.maps.Map(mapRef.current, mapOptions);
+  const fetchCoordinates = useCallback(async (zipCode) => {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`
+      );
+      const { lat, lng } = response.data.results[0].geometry.location;
+      setCoordinates({ lat, lng });
+    } catch (error) {
+      console.error('Error fetching coordinates:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [apiKey]);
 
-    // Create the marker
-    const marker = new window.google.maps.Marker({
-      position: { lat: latitude, lng: longitude },
-      map: map,
-    });
+  const mapRef = useCallback((node) => {
+    node && setMapContainer(node);
+  }, []);
 
-    // Clean up when component unmounts
-    return () => {
-      marker.setMap(null);
-      map.setMap(null);
-    };
-  }, [latitude, longitude, zoom]);
+  const mapOptions = {
+    center: coordinates ? coordinates : { lat: 0, lng: 0 },
+    zoom: zoom,
+  };
 
-  return <div ref={mapRef} style={{ width: '100%', height: '400px' }} />;
+  return (
+    <GoogleMapsProvider googleMapsAPIKey={apiKey} mapContainer={mapContainer} mapOptions={mapOptions}>
+      {isLoading ? (
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      ) : (
+        <React.StrictMode>
+          <div ref={mapRef} style={{ height: '100%' }} />
+        </React.StrictMode>
+      )}
+    </GoogleMapsProvider>
+  );
 };
 
 export default GoogleMap;
