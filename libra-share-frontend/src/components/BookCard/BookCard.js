@@ -32,7 +32,6 @@ const BookCard = ({
           <Card.Title>{title}</Card.Title>
           <Card.Text>Author: {author}</Card.Text>
           <Card.Text>Genre: {genre}</Card.Text>
-          {/* <button onClick={handleOpenModal}>View Details</button> */}
         </Card.Body>
       </Card>
       <BookDetailsModal

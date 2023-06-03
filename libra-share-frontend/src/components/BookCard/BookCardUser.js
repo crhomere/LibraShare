@@ -1,37 +1,52 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
+import BookDetailsModal from '../BookDetailsModal/BookDetailsModal';
 import { Card, Button, Container, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit, faStar } from '@fortawesome/free-solid-svg-icons';
 import { updateBook, deleteBook } from '../../features/book/bookSlice';
 import { useSelector } from 'react-redux';
 
 import './BookCardUser.css';
 
-const BookCardUser = ({ bookId, title, image, author, description, genre, onDelete }) => {
+const BookCardUser = ({
+  bookId,
+  title,
+  image,
+  author,
+  description,
+  genre,
+  isbn,
+  onDelete,
+}) => {
   const { user } = useSelector((store) => store.user);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showUpdateBookModal, setUpdateBookModal] = useState(false);
+  const [showRateBookModal, setShowRateBookModal] = useState(false);
   const [descriptionUpdate, setDescriptionUpdate] = useState(description);
   const [authorUpdate, setAuthorUpdate] = useState(author);
   const [genreUpdate, setGenreUpdate] = useState(genre[0]);
 
-  console.log('user.id', user.id);
-  console.log('bookId', bookId);
-
   const dispatch = useDispatch();
 
   const handleUpdate = () => {
-    setShowModal(true);
+    setUpdateBookModal(true);
   };
-
 
   const handleDelete = () => {
     onDelete(bookId);
   };
 
   const handleModalClose = () => {
-    setShowModal(false);
+    setUpdateBookModal(false);
+  };
+
+  const handleRateModalClose = () => {
+    setShowRateBookModal(false);
+  };
+  const handleRateModalOpen = () => {
+    setShowRateBookModal(true);
   };
 
   const handleFormSubmit = (e) => {
@@ -45,7 +60,7 @@ const BookCardUser = ({ bookId, title, image, author, description, genre, onDele
 
     dispatch(updateBook({ bookId: bookId, bookDto: updatedBook }));
 
-    setShowModal(false);
+    setUpdateBookModal(false);
   };
 
   return (
@@ -61,15 +76,32 @@ const BookCardUser = ({ bookId, title, image, author, description, genre, onDele
         <Card.Text>Description: {description}</Card.Text>
       </div>
       <div className="actions">
-        <Button className="delete-update-color-btn" onClick={handleDelete}>
-          <FontAwesomeIcon icon={faTrashAlt} />
-        </Button>
-        <Button className="delete-update-color-btn" onClick={handleUpdate}>
+        <Button className="edit-book-btn" onClick={handleUpdate}>
           <FontAwesomeIcon icon={faEdit} />
+        </Button>
+        <Button className="rate-book-btn" onClick={handleRateModalOpen}>
+          <FontAwesomeIcon icon={faStar} />
+        </Button>
+        <Button className="delete-book-btn" onClick={handleDelete}>
+          <FontAwesomeIcon icon={faTrashAlt} />
         </Button>
       </div>
 
-      <Modal show={showModal} onHide={handleModalClose}>
+      <BookDetailsModal
+        book={{
+          bookId,
+          title,
+          description,
+          image,
+          author,
+          isbn,
+          genre,
+        }}
+        showModal={showRateBookModal}
+        handleCloseModal={handleRateModalClose}
+      />
+
+      <Modal show={showUpdateBookModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>Update Book</Modal.Title>
         </Modal.Header>
@@ -78,11 +110,12 @@ const BookCardUser = ({ bookId, title, image, author, description, genre, onDele
             <Form.Group controlId="description">
               <Form.Label>Description</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
                 value={descriptionUpdate}
                 onChange={(e) => setDescriptionUpdate(e.target.value)}
               />
             </Form.Group>
+
             <Form.Group controlId="author">
               <Form.Label>Author</Form.Label>
               <Form.Control
@@ -99,7 +132,7 @@ const BookCardUser = ({ bookId, title, image, author, description, genre, onDele
                 onChange={(e) => setGenreUpdate(e.target.value)}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="secondary" type="submit" className="mt-3">
               Update
             </Button>
           </Form>
