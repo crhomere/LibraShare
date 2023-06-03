@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import BookDetailsModal from '../BookDetailsModal/BookDetailsModal';
 import { Card, Button, Container, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faEdit, faStar } from '@fortawesome/free-solid-svg-icons';
-import { updateBook, deleteBook } from '../../features/book/bookSlice';
-import { useSelector } from 'react-redux';
+import {
+  faTrashAlt,
+  faEdit,
+  faStar as solidStar,
+} from '@fortawesome/free-solid-svg-icons';
+import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
+import { updateBook } from '../../features/book/bookSlice';
+import { getRating } from '../../features/rating/ratingSlice';
 
 import './BookCardUser.css';
 
@@ -21,6 +26,7 @@ const BookCardUser = ({
   onDelete,
 }) => {
   const { user } = useSelector((store) => store.user);
+  const { rating } = useSelector((state) => state.rating);
 
   const [showUpdateBookModal, setUpdateBookModal] = useState(false);
   const [showRateBookModal, setShowRateBookModal] = useState(false);
@@ -63,6 +69,26 @@ const BookCardUser = ({
     setUpdateBookModal(false);
   };
 
+  useEffect(() => {
+    dispatch(getRating(bookId));
+  }, [dispatch, bookId]);
+
+  const renderRatingStars = () => {
+    const starCount = 5;
+    const filledStars = Math.round(rating);
+    const stars = [];
+
+    for (let i = 1; i <= starCount; i++) {
+      const starIcon = i <= filledStars ? solidStar : regularStar;
+
+      stars.push(
+        <FontAwesomeIcon key={i} icon={starIcon} className="star-icon" />
+      );
+    }
+
+    return stars;
+  };
+
   return (
     <Container className="book-card-container">
       <div className="book-info">
@@ -71,16 +97,22 @@ const BookCardUser = ({
         </Card>
       </div>
       <div className="book-title">
+        <div className="rating-stars">{renderRatingStars()}</div>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>Author: {author}</Card.Text>
-        <Card.Text>Description: {description}</Card.Text>
+        <Card.Text>
+          {' '}
+          <span className="author-header">Author:</span> {author}{' '}
+        </Card.Text>
+        <Card.Text>
+          <span className="description-header">Description:</span> {description}
+        </Card.Text>
       </div>
       <div className="actions">
         <Button className="edit-book-btn" onClick={handleUpdate}>
           <FontAwesomeIcon icon={faEdit} />
         </Button>
         <Button className="rate-book-btn" onClick={handleRateModalOpen}>
-          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={solidStar} />
         </Button>
         <Button className="delete-book-btn" onClick={handleDelete}>
           <FontAwesomeIcon icon={faTrashAlt} />

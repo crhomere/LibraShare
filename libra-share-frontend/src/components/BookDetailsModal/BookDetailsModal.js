@@ -64,42 +64,44 @@ const BookDetailsModal = ({ book, showModal, handleCloseModal }) => {
         <Button variant="secondary" onClick={handleCloseModal}>
           Close
         </Button>
-        {!showReviewForm && (
-          <Button variant="secondary" onClick={handleAddReviewClick}>
-            Add Review
-          </Button>
-        )}
-        {showReviewForm && (
-          <>
-            <Form.Group>
-              <Form.Label>Rating:</Form.Label>
-              <Form.Control
-                as="select"
-                value={rating}
-                onChange={(e) => setRating(parseInt(e.target.value))}
-              >
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Comment:</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-            </Form.Group>
-            <Button variant="secondary" onClick={handleAddReview}>
-              Submit Review
-            </Button>
-          </>
-        )}
       </Modal.Footer>
+
+      {!showReviewForm && (
+        <Button variant="secondary add-review-btn" onClick={handleAddReviewClick}>
+          Add Review
+        </Button>
+      )}
+      {showReviewForm && (
+        <>
+          <Form.Group>
+            <Form.Label>Rating:</Form.Label>
+            <Form.Control
+              as="select"
+              value={rating}
+              onChange={(e) => setRating(parseInt(e.target.value))}
+              defaultValue={5}
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Comment:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </Form.Group>
+          <Button variant="secondary" onClick={handleAddReview}>
+            Submit Review
+          </Button>
+        </>
+      )}
     </Modal>
   );
 };
