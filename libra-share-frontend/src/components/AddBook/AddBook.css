@@ -1,0 +1,18 @@
+.custom-input {
+  width: 30%;
+  margin: auto;
+}
+
+.add-book-btn {
+  margin-top: 1rem;
+  width: 30%;
+  background-color: rgb(79, 61, 57);
+  color: white;
+  border: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.add-book-btn:hover {
+  cursor: pointer;
+  background-color: rgb(195, 176, 144);
+}

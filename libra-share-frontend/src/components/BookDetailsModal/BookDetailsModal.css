@@ -1,0 +1,23 @@
+.modal-content {
+  min-height: 30rem;
+}
+
+.modal-body {
+  height: 30rem;
+}
+
+.img-section {
+  height: 50%;
+}
+
+.img-section img {
+  height: 100%;
+}
+
+.info-section {
+margin-top: 2rem;
+}
+
+.info-section .header {
+  font-weight: 700;
+}

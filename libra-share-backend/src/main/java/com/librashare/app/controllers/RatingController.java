@@ -24,6 +24,10 @@ public class RatingController {
     public List<RatingDto> getAllRatingsByBook(@PathVariable Long bookId) {
         return ratingService.getAllRatingsByBook(bookId);
     }
+    @GetMapping("/book/{bookId}/rating")
+    public Float getAllRatingValueByBook(@PathVariable Long bookId) {
+        return ratingService.getAllRatingValueByBook(bookId);
+    }
 
     @GetMapping("/user/{userId}/all")
     public List<RatingDto> getAllRatingsByUser(@PathVariable Long userId) {
