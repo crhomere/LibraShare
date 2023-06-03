@@ -1,20 +1,18 @@
 .book-card-container {
   display: flex;
   justify-content: space-between;
-  /* width: 80%; */
 }
 
-.book-card {
-  /* border: 0.5px solid rgb(222, 226, 230);
-  background-color: rgb(79,61,57); */
-  /* background-color: rgb(222, 226, 230); */
-}
 .card-text,
 .card-title {
   margin: 0 1rem;
 }
 
 .card-title {
+  font-weight: 600;
+}
+.author-header,
+.description-header {
   font-weight: 600;
 }
 
@@ -39,6 +37,13 @@
   border: 0.5px solid #212529;
   background-color: transparent !important;
   color: #212529;
+}
+
+.rating-stars {
+  margin-left: 1rem;
+}
+.star-icon {
+  color: rgb(223, 121, 34);
 }
 
 @media (max-width: 767px) {
