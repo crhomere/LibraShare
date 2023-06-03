@@ -1,6 +1,10 @@
 .book-card-container {
   margin-bottom: 3rem;
 }
+.book-card-container:hover {
+  cursor: pointer;
+}
+
 .book-card {
   height: 100%;
   border: none;
@@ -18,7 +22,7 @@
   object-fit: fill;
   object-fit: contain;
   height: 230px;
-  margin-bottom: .7rem;
+  margin-bottom: 0.7rem;
 }
 
 .book-card .card-title {

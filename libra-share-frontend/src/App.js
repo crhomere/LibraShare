@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,7 +13,6 @@ import Register from './pages/Register/Register';
 import Navbar from './components/Navbar/Navbar';
 import Cart from './components/Cart/Cart';
 import BookList from './components/BookList/BookList';
-import BookDetails from './components/BookDetails/BookDetails';
 import ReviewForm from './components/ReviewForm/ReviewForm';
 import SearchBar from './components/SearchBar/SearchBar';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
@@ -49,10 +48,7 @@ const App = () => {
             path="/library"
             element={<PrivateRoute element={<BookList />} />}
           />
-          <Route
-            path="/books/:bookId"
-            element={<PrivateRoute element={<BookDetails />} />}
-          />
+
           <Route
             path="/books/:bookId/review"
             element={<PrivateRoute element={<ReviewForm />} />}
