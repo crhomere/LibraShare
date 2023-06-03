@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Card, Button, Container, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 import './BookCardUser.css';
 
-const BookCardUser = ({ bookId, title, image, author, description, genre }) => {
+const BookCardUser = ({ bookId, title, image, author, description, genre, onDelete }) => {
   const { user } = useSelector((store) => store.user);
 
   const [showModal, setShowModal] = useState(false);
@@ -25,8 +25,9 @@ const BookCardUser = ({ bookId, title, image, author, description, genre }) => {
     setShowModal(true);
   };
 
+
   const handleDelete = () => {
-    dispatch(deleteBook({ userId: user.id, bookId: bookId }));
+    onDelete(bookId);
   };
 
   const handleModalClose = () => {
