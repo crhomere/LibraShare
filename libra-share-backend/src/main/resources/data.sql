@@ -5,7 +5,7 @@ VALUES ('To Kill a Mockingbird',
         'https://m.media-amazon.com/images/I/51IXWZzlgSL._SX330_BO1,204,203,200_.jpg', 'Harper Lee', '9780446310789',
         ARRAY['Classic']),
        ('1984', 'A dystopian novel by George Orwell featuring surveillance and totalitarianism.',
-        'https://m.media-amazon.com/images/I/41aM4xOZxaL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg', 'George Orwell',
+        'https://images.penguinrandomhouse.com/cover/9788418915093', 'George Orwell',
         '9780451524935', ARRAY['Dystopian']),
        ('Moby Dick', 'A sailor embarks on a dangerous quest to hunt the white whale Moby Dick.',
         'https://m.media-amazon.com/images/I/41ZQ18MguuL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg', 'Herman Melville',
@@ -48,7 +48,7 @@ VALUES ('To Kill a Mockingbird',
         '9780553213712', ARRAY['Classic']),
        ('In Search of Lost Time',
         'An expansive, multivolume novel by Marcel Proust that explores themes of time, space, and memory.',
-        'https://m.media-amazon.com/images/I/51-JSZSLqjL._SX218_BO1,204,203,200_QL40_FMwebp_.jpg', 'Marcel Proust',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp-jhUK5V9xuXSQEFLlD6q7k4NsMqk6qHAt-hQQDhBYoVkHyEViAkRy8HaiVynKrkW0AA&usqp=CAU', 'Marcel Proust',
         '9780679645689', ARRAY['Classic']),
        ('The Odyssey',
         'Homer''s epic poem recounting the adventures of Odysseus during his return from the Trojan War.',
@@ -75,4 +75,16 @@ VALUES
     ('1900-01-01', true, 3, 2),
     ('1900-01-01', true, 4, 4),
     ('1900-01-01', true, 5, 1);
+
+INSERT INTO rating (comment, last_modified, rating, username,book_id, user_id)
+VALUES
+    ('book 1 of user 1','1900-01-01',1, 'johndoe', 1, 1),
+    ('book 1 of user 2','1900-01-01',2, 'johnydoe', 1, 2),
+    ('book 1 of user 3','1900-01-01',3, 'janesmith', 1, 3),
+    ('book 1 of user 4','1900-01-01',1, 'michaeljohnson', 1, 4),
+    ('book 2 of user 1','1900-01-01',2, 'johndoe', 2, 1),
+    ('book 2 of user 2','1900-01-01',2, 'johnydoe', 2, 2),
+    ('book 3 of user 1','1900-01-01',2, 'johndoe', 3, 1),
+    ('book 3 of user 2','1900-01-01',2, 'johnydoe', 3, 2),
+    ('book 3 of user 3','1900-01-01',2, 'janesmith', 3, 3);
 
