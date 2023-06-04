@@ -99,16 +99,16 @@ public class BookServiceImpl {
                     JSONObject detailsObject = bookDetailsObject.getJSONObject("details");
                     String description = detailsObject.optString("description", "N/A");
                     String[] subjects;
-                    try{
-                    JSONArray subjectsArray = detailsObject.getJSONArray("subjects");
+                    try {
+                        JSONArray subjectsArray = detailsObject.getJSONArray("subjects");
                         subjects = new String[subjectsArray.length()];
 
                         for (int i = 0; i < subjectsArray.length(); i++) {
                             subjects[i] = subjectsArray.getString(i);
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
-                        subjects = new String[] {"No object"};
+                        subjects = new String[]{"No object"};
                     }
 
                     JSONArray authorsArray = detailsObject.getJSONArray("authors");
@@ -281,15 +281,18 @@ public class BookServiceImpl {
     public List<UserBookDto> getAllBookByUser(Long userId) {
         if (userId != null && userId > 0) {
             List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyUserUserId(userId);
-            return userCopies.stream()
-                    .map(userCopy -> new UserBookDto(
-                            new UserDto(userCopy.getUserCopyUser()),
-                            new BookDto(userCopy.getUserCopyBook()),
-                            userCopy.getExchangeReady(),
-                            userCopy.getLastExchangedDate()
-                    ))
-                    .collect(Collectors.toList());
+            List<UserBookDto> userBookDtos = new ArrayList<>();
+            for (UserCopy userCopy : userCopies) {
+                User user = userCopy.getUserCopyUser();
+                Book book = userCopy.getUserCopyBook();
+                UserDto userDto = new UserDto(user);
+                BookDto bookDto = new BookDto(book);
+                bookDto.setRating(ratingService.getAllRatingValueByBook(book.getBookId()));
+                userBookDtos.add(new UserBookDto(userDto, bookDto, userCopy.getExchangeReady(), userCopy.getLastExchangedDate()));
+            }
+            return userBookDtos;
+        } else {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 }
