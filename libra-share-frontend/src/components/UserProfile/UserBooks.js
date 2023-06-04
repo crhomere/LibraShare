@@ -4,6 +4,7 @@ import { fetchBooksByUser } from '../../features/book/bookSlice';
 import BookCardUser from '../../components/BookCard/BookCardUser';
 import { deleteBook } from '../../features/book/bookSlice';
 
+
 import './UserBooks.css';
 
 const UserBooks = () => {
@@ -24,8 +25,7 @@ const UserBooks = () => {
     () => {
       dispatch(fetchBooksByUser(user.id));
     },
-    [dispatch, user.id],
-    userBooks
+    [dispatch, user.id]
   );
 
   console.log(userBooks);

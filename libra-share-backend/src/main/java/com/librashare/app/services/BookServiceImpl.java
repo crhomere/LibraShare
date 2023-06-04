@@ -36,6 +36,8 @@ public class BookServiceImpl {
     @Autowired
     private UserCopyRepository userCopyRepository;
 
+    @Autowired
+    private RatingService ratingService;
 
     @Transactional
     public Optional<BookDto> getBookById(Long bookId) {
@@ -43,6 +45,7 @@ public class BookServiceImpl {
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
             BookDto bookDto = new BookDto(book);
+            bookDto.setRating(ratingService.getAllRatingValueByBook(bookId));
             return Optional.of(bookDto);
         } else {
             return Optional.empty();
@@ -56,6 +59,7 @@ public class BookServiceImpl {
         List<BookDto> bookDtos = new ArrayList<>();
         for (Book book : books) {
             BookDto bookDto = new BookDto(book);
+            bookDto.setRating(ratingService.getAllRatingValueByBook(bookDto.getBookId()));
             bookDtos.add(bookDto);
         }
         return bookDtos;
@@ -95,16 +99,16 @@ public class BookServiceImpl {
                     JSONObject detailsObject = bookDetailsObject.getJSONObject("details");
                     String description = detailsObject.optString("description", "N/A");
                     String[] subjects;
-                    try{
-                    JSONArray subjectsArray = detailsObject.getJSONArray("subjects");
+                    try {
+                        JSONArray subjectsArray = detailsObject.getJSONArray("subjects");
                         subjects = new String[subjectsArray.length()];
 
                         for (int i = 0; i < subjectsArray.length(); i++) {
                             subjects[i] = subjectsArray.getString(i);
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
-                        subjects = new String[] {"No object"};
+                        subjects = new String[]{"No object"};
                     }
 
                     JSONArray authorsArray = detailsObject.getJSONArray("authors");
@@ -208,21 +212,41 @@ public class BookServiceImpl {
 
     }
 
+//    public List<UserBookDto> getAllBookByName(BookDto bookDto) {
+//        if (bookDto.getTitle() != null && !bookDto.getTitle().isEmpty()) {
+//            List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyBookTitle(bookDto.getTitle());
+//            return userCopies.stream()
+//                    .map(userCopy -> new UserBookDto(
+//                            new UserDto(userCopy.getUserCopyUser()),
+//                            new BookDto(userCopy.getUserCopyBook()),
+//                            userCopy.getExchangeReady(),
+//                            userCopy.getLastExchangedDate()
+//                    ))
+//                    .collect(Collectors.toList());
+//        }
+//        return Collections.emptyList();
+//
+//    }
+
     public List<UserBookDto> getAllBookByName(BookDto bookDto) {
         if (bookDto.getTitle() != null && !bookDto.getTitle().isEmpty()) {
             List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyBookTitle(bookDto.getTitle());
             return userCopies.stream()
-                    .map(userCopy -> new UserBookDto(
-                            new UserDto(userCopy.getUserCopyUser()),
-                            new BookDto(userCopy.getUserCopyBook()),
-                            userCopy.getExchangeReady(),
-                            userCopy.getLastExchangedDate()
-                    ))
+                    .map(userCopy -> {
+                        BookDto book = new BookDto(userCopy.getUserCopyBook());
+                        book.setRating(ratingService.getAllRatingValueByBook(book.getBookId()));
+                        return new UserBookDto(
+                                new UserDto(userCopy.getUserCopyUser()),
+                                book,
+                                userCopy.getExchangeReady(),
+                                userCopy.getLastExchangedDate()
+                        );
+                    })
                     .collect(Collectors.toList());
         }
         return Collections.emptyList();
-
     }
+
 
     public List<UserBookDto> getAllBookByIsbn(BookDto bookDto) {
         if (bookDto.getIsbn() != null && !bookDto.getIsbn().isEmpty()) {
@@ -257,15 +281,18 @@ public class BookServiceImpl {
     public List<UserBookDto> getAllBookByUser(Long userId) {
         if (userId != null && userId > 0) {
             List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyUserUserId(userId);
-            return userCopies.stream()
-                    .map(userCopy -> new UserBookDto(
-                            new UserDto(userCopy.getUserCopyUser()),
-                            new BookDto(userCopy.getUserCopyBook()),
-                            userCopy.getExchangeReady(),
-                            userCopy.getLastExchangedDate()
-                    ))
-                    .collect(Collectors.toList());
+            List<UserBookDto> userBookDtos = new ArrayList<>();
+            for (UserCopy userCopy : userCopies) {
+                User user = userCopy.getUserCopyUser();
+                Book book = userCopy.getUserCopyBook();
+                UserDto userDto = new UserDto(user);
+                BookDto bookDto = new BookDto(book);
+                bookDto.setRating(ratingService.getAllRatingValueByBook(book.getBookId()));
+                userBookDtos.add(new UserBookDto(userDto, bookDto, userCopy.getExchangeReady(), userCopy.getLastExchangedDate()));
+            }
+            return userBookDtos;
+        } else {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 }

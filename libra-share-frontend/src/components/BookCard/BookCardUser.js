@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import BookDetailsModal from '../BookDetailsModal/BookDetailsModal';
+import { renderRatingStars } from '../../utils/renderRatingStars';
+
 import { Card, Button, Container, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faEdit, faStar } from '@fortawesome/free-solid-svg-icons';
-import { updateBook, deleteBook } from '../../features/book/bookSlice';
-import { useSelector } from 'react-redux';
+import {
+  faTrashAlt,
+  faEdit,
+  faStar as solidStar,
+} from '@fortawesome/free-solid-svg-icons';
+import { updateBook } from '../../features/book/bookSlice';
 
 import './BookCardUser.css';
 
@@ -18,10 +23,10 @@ const BookCardUser = ({
   description,
   genre,
   isbn,
+  rating,
   onDelete,
 }) => {
-  const { user } = useSelector((store) => store.user);
-
+  const [showAddRating, setShowAddRating] = useState(true);
   const [showUpdateBookModal, setUpdateBookModal] = useState(false);
   const [showRateBookModal, setShowRateBookModal] = useState(false);
   const [descriptionUpdate, setDescriptionUpdate] = useState(description);
@@ -71,16 +76,22 @@ const BookCardUser = ({
         </Card>
       </div>
       <div className="book-title">
+        <div className="rating-stars">{renderRatingStars(rating)}</div>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>Author: {author}</Card.Text>
-        <Card.Text>Description: {description}</Card.Text>
+        <Card.Text>
+          {' '}
+          <span className="author-header">Author:</span> {author}{' '}
+        </Card.Text>
+        <Card.Text>
+          <span className="description-header">Description:</span> {description}
+        </Card.Text>
       </div>
       <div className="actions">
         <Button className="edit-book-btn" onClick={handleUpdate}>
           <FontAwesomeIcon icon={faEdit} />
         </Button>
         <Button className="rate-book-btn" onClick={handleRateModalOpen}>
-          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={solidStar} />
         </Button>
         <Button className="delete-book-btn" onClick={handleDelete}>
           <FontAwesomeIcon icon={faTrashAlt} />
@@ -96,7 +107,9 @@ const BookCardUser = ({
           author,
           isbn,
           genre,
+          rating,
         }}
+        showAddRatingOnUserDash={showAddRating}
         showModal={showRateBookModal}
         handleCloseModal={handleRateModalClose}
       />
