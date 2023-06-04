@@ -1,23 +1,25 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { renderRatingStars } from '../../utils/renderRatingStars';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { addRating } from '../../features/rating/ratingSlice';
 
 import './BookDetailsModal.css';
 
-const BookDetailsModal = ({ book, showModal, handleCloseModal }) => {
+const BookDetailsModal = ({
+  book,
+  showModal,
+  handleCloseModal,
+}) => {
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  const [showReviewForm, setShowReviewForm] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  const handleAddReviewClick = () => {
-    setShowReviewForm(true);
-  };
-
   const handleAddReview = (event) => {
+    event.preventDefault();
+
     console.log('comment', comment);
     console.log('rating', rating);
     const ratingDto = {
@@ -29,8 +31,9 @@ const BookDetailsModal = ({ book, showModal, handleCloseModal }) => {
     dispatch(addRating({ userId: user.id, bookId: book.bookId, ratingDto }));
     setRating(0);
     setComment('');
-    setShowReviewForm(false);
   };
+
+  const isSubmitDisabled = rating === 0 || comment.trim().length < 10;
 
   return (
     <Modal
@@ -40,11 +43,18 @@ const BookDetailsModal = ({ book, showModal, handleCloseModal }) => {
     >
       <Modal.Header>
         <Modal.Title>{book.title}</Modal.Title>
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Close
+        </Button>
       </Modal.Header>
       <Modal.Body>
         <div className="img-section">
           <img src={book.image} alt={book.title} />
+          <p className="rating-stars center">
+            {renderRatingStars(book.rating)}
+          </p>
         </div>
+
         <div className="info-section">
           <p>
             <span className="header">Author:</span> {book.author}
@@ -60,48 +70,41 @@ const BookDetailsModal = ({ book, showModal, handleCloseModal }) => {
           </p>
         </div>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseModal}>
-          Close
-        </Button>
-      </Modal.Footer>
+      <Modal.Footer></Modal.Footer>
 
-      {!showReviewForm && (
-        <Button variant="secondary add-review-btn" onClick={handleAddReviewClick}>
-          Add Review
+      <Form onSubmit={handleAddReview}>
+        <Form.Group controlId="rating">
+          <Form.Label>Rating:</Form.Label>
+          <Form.Control
+            as="select"
+            value={rating}
+            onChange={(e) => setRating(parseInt(e.target.value))}
+            defaultValue={0}
+          >
+            <option value={0} disabled hidden>
+              Select rating
+            </option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+          </Form.Control>
+        </Form.Group>
+        <Form.Group controlId="comment">
+          <Form.Label>Comment:</Form.Label>
+          <p className="text-note">*Put at least 10 words to submit.</p>
+          <Form.Control
+            as="textarea"
+            rows={5}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+        </Form.Group>
+        <Button variant="secondary" type="submit" disabled={isSubmitDisabled}>
+          Submit Review
         </Button>
-      )}
-      {showReviewForm && (
-        <>
-          <Form.Group>
-            <Form.Label>Rating:</Form.Label>
-            <Form.Control
-              as="select"
-              value={rating}
-              onChange={(e) => setRating(parseInt(e.target.value))}
-              defaultValue={5}
-            >
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Comment:</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="secondary" onClick={handleAddReview}>
-            Submit Review
-          </Button>
-        </>
-      )}
+      </Form>
     </Modal>
   );
 };

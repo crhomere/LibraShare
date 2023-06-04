@@ -101,3 +101,14 @@
   outline: none !important;
 }
 /* END LOGIN */
+
+/* RATING START */
+
+.rating-stars {
+  margin-left: 1rem;
+}
+.star-icon {
+  color: rgb(223, 121, 34);
+}
+
+/* END RATING START */

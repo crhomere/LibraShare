@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import BookDetailsModal from '../BookDetailsModal/BookDetailsModal';
+import { renderRatingStars } from '../../utils/renderRatingStars';
+
 import { Card, Button, Container, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,9 +11,7 @@ import {
   faEdit,
   faStar as solidStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 import { updateBook } from '../../features/book/bookSlice';
-import { getRating } from '../../features/rating/ratingSlice';
 
 import './BookCardUser.css';
 
@@ -23,11 +23,10 @@ const BookCardUser = ({
   description,
   genre,
   isbn,
+  rating,
   onDelete,
 }) => {
-  const { user } = useSelector((store) => store.user);
-  const { rating } = useSelector((state) => state.rating);
-
+  const [showAddRating, setShowAddRating] = useState(true);
   const [showUpdateBookModal, setUpdateBookModal] = useState(false);
   const [showRateBookModal, setShowRateBookModal] = useState(false);
   const [descriptionUpdate, setDescriptionUpdate] = useState(description);
@@ -69,26 +68,6 @@ const BookCardUser = ({
     setUpdateBookModal(false);
   };
 
-  useEffect(() => {
-    dispatch(getRating(bookId));
-  }, [dispatch, bookId]);
-
-  const renderRatingStars = () => {
-    const starCount = 5;
-    const filledStars = Math.round(rating);
-    const stars = [];
-
-    for (let i = 1; i <= starCount; i++) {
-      const starIcon = i <= filledStars ? solidStar : regularStar;
-
-      stars.push(
-        <FontAwesomeIcon key={i} icon={starIcon} className="star-icon" />
-      );
-    }
-
-    return stars;
-  };
-
   return (
     <Container className="book-card-container">
       <div className="book-info">
@@ -97,7 +76,7 @@ const BookCardUser = ({
         </Card>
       </div>
       <div className="book-title">
-        <div className="rating-stars">{renderRatingStars()}</div>
+        <div className="rating-stars">{renderRatingStars(rating)}</div>
         <Card.Title>{title}</Card.Title>
         <Card.Text>
           {' '}
@@ -128,7 +107,9 @@ const BookCardUser = ({
           author,
           isbn,
           genre,
+          rating,
         }}
+        showAddRatingOnUserDash={showAddRating}
         showModal={showRateBookModal}
         handleCloseModal={handleRateModalClose}
       />

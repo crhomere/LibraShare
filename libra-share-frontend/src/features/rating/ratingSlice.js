@@ -17,7 +17,6 @@ export const addRating = createAsyncThunk(
         `${BASE_URL_RATINGS}/${userId}/${bookId}/add`,
         ratingDto
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -41,6 +40,7 @@ export const getRating = createAsyncThunk(
     }
   }
 );
+
 
 const ratingSlice = createSlice({
   name: 'ratings',

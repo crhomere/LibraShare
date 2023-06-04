@@ -1,21 +1,18 @@
-.modal-content {
-  min-height: 30rem;
-}
-
 .modal-body {
-  height: 30rem;
+  display: flex;
+  gap: 1rem;
 }
 
-.img-section {
-  height: 50%;
-}
 
 .img-section img {
-  height: 100%;
+  width: 100%;
+}
+.img-section info-section {
+  width: 50%;
 }
 
 .info-section {
-margin-top: 2rem;
+  /* margin-top: 2rem; */
 }
 
 .info-section .header {
@@ -24,4 +21,8 @@ margin-top: 2rem;
 
 .add-review-btn {
   margin-top: 2rem;
+}
+
+.text-note {
+  font-size: 12px;
 }
