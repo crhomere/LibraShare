@@ -36,6 +36,8 @@ public class BookServiceImpl {
     @Autowired
     private UserCopyRepository userCopyRepository;
 
+    @Autowired
+    private RatingService ratingService;
 
     @Transactional
     public Optional<BookDto> getBookById(Long bookId) {
@@ -43,6 +45,7 @@ public class BookServiceImpl {
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
             BookDto bookDto = new BookDto(book);
+            bookDto.setRating(ratingService.getAllRatingValueByBook(bookId));
             return Optional.of(bookDto);
         } else {
             return Optional.empty();
@@ -56,6 +59,7 @@ public class BookServiceImpl {
         List<BookDto> bookDtos = new ArrayList<>();
         for (Book book : books) {
             BookDto bookDto = new BookDto(book);
+            bookDto.setRating(ratingService.getAllRatingValueByBook(bookDto.getBookId()));
             bookDtos.add(bookDto);
         }
         return bookDtos;
@@ -208,21 +212,41 @@ public class BookServiceImpl {
 
     }
 
+//    public List<UserBookDto> getAllBookByName(BookDto bookDto) {
+//        if (bookDto.getTitle() != null && !bookDto.getTitle().isEmpty()) {
+//            List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyBookTitle(bookDto.getTitle());
+//            return userCopies.stream()
+//                    .map(userCopy -> new UserBookDto(
+//                            new UserDto(userCopy.getUserCopyUser()),
+//                            new BookDto(userCopy.getUserCopyBook()),
+//                            userCopy.getExchangeReady(),
+//                            userCopy.getLastExchangedDate()
+//                    ))
+//                    .collect(Collectors.toList());
+//        }
+//        return Collections.emptyList();
+//
+//    }
+
     public List<UserBookDto> getAllBookByName(BookDto bookDto) {
         if (bookDto.getTitle() != null && !bookDto.getTitle().isEmpty()) {
             List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyBookTitle(bookDto.getTitle());
             return userCopies.stream()
-                    .map(userCopy -> new UserBookDto(
-                            new UserDto(userCopy.getUserCopyUser()),
-                            new BookDto(userCopy.getUserCopyBook()),
-                            userCopy.getExchangeReady(),
-                            userCopy.getLastExchangedDate()
-                    ))
+                    .map(userCopy -> {
+                        BookDto book = new BookDto(userCopy.getUserCopyBook());
+                        book.setRating(ratingService.getAllRatingValueByBook(book.getBookId()));
+                        return new UserBookDto(
+                                new UserDto(userCopy.getUserCopyUser()),
+                                book,
+                                userCopy.getExchangeReady(),
+                                userCopy.getLastExchangedDate()
+                        );
+                    })
                     .collect(Collectors.toList());
         }
         return Collections.emptyList();
-
     }
+
 
     public List<UserBookDto> getAllBookByIsbn(BookDto bookDto) {
         if (bookDto.getIsbn() != null && !bookDto.getIsbn().isEmpty()) {

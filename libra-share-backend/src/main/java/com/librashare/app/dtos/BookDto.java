@@ -11,6 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookDto implements Serializable {
+
     private Long bookId;
     private String title;
     private String description;
@@ -20,7 +21,7 @@ public class BookDto implements Serializable {
     private String isbn;
     private String[] genre;
 
-
+    private Float rating;
     public BookDto(Book book) {
         if (book.getBookId() != null) {
             this.bookId = book.getBookId();
@@ -43,6 +44,7 @@ public class BookDto implements Serializable {
         if (book.getGenre() != null) {
             this.genre = book.getGenre();
         }
+
 
     }
 }
