@@ -39,14 +39,7 @@
   color: #212529;
 }
 
-.rating-stars {
-  margin-left: 1rem;
-}
-.star-icon {
-  color: rgb(223, 121, 34);
-}
-
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .book-card-container {
     flex-direction: column;
     align-items: center;
