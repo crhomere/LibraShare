@@ -8,8 +8,8 @@
   - [3. Database](#3-database)
   - [4. External API Usage](#4-external-api-usage)
     - [ Google Maps API](#-google-maps-api)
-  - [ Open Library API](#-open-library-api)
-  - [ Address API](#-address-api)
+    - [ Open Library API](#-open-library-api)
+    - [ Address API](#-address-api)
 - [System Architecture](#system-architecture)
   - [1. Presentation Layer](#1-presentation-layer)
   - [2. Application Layer](#2-application-layer)
@@ -63,11 +63,11 @@ Our decentralized library system is a web-based application that allows users to
 
 The Google Maps API is leveraged to identify the nearest physical book to the requesting user. This API helps us pinpoint the current location of the users and the books, making it easier to facilitate the transfer of physical books between users. You can find more about this API at the [Google Maps Platform](https://mapsplatform.google.com/).
 
-### <div align="center"> Open Library API
+#### <div align="center"> Open Library API
 
 The [Open Library API](https://openlibrary.org/developers/api) is a freely accessible API that allows us to fetch detailed book information such as author, publication date, genre, and book summary. We utilize this API to ensure that the book data we present to our users is accurate and up-to-date. The Open Library API plays a crucial role in our Book Management feature, enabling users to search and view comprehensive book details.
 
-### <div align="center"> Address API
+#### <div align="center"> Address API
 
 The Address API is used for verifying and standardizing the addresses provided by our users. This API assists us in ensuring that the user's location data is accurate, which is critical for our service as we rely on precise user locations to facilitate the transfer of physical books. The Address API takes a user's provided address, verifies its validity, and returns a standardized version of the address that ensures consistency in our database and improves the accuracy of the location data we use with the Google Maps API.
 
