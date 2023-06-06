@@ -27,8 +27,6 @@
   - [Running the Backend](#running-the-backend)
 - [Getting Started](#getting-started)
 - [API Documentation](#api-documentation)
-- [Contribution](#contribution)
-- [License](#license)
 
 ## System Overview
 
@@ -183,7 +181,3 @@ Here is a brief overview of the API endpoints available:
 | `GET`    | `/books/zipcode/{zip code}`        | Get books by zip code     |
 | `GET`    | `/books/user/{user id}`            | Get books by user         |
 | `GET`    | `/books/{isbn}`                    | Get book by ISBN          |
-
-## Contribution
-
-## License
