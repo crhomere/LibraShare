@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoogleMapsService {
   
-  @Value("${google.maps.api.key}")
+  @Value("")
   private String googleMapsApiKey;
 
   public double calculateDistance(double sourceLatitude, double sourceLongitude, double destinationLatitude, double destinationLongitude) {

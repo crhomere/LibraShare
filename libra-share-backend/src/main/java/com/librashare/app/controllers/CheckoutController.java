@@ -20,9 +20,9 @@ public class CheckoutController {
         Long userId = checkoutRequest.getUserId();
 
         // Call the bookServiceImpl to handle the book checkout
-        String result = bookServiceImpl.checkoutBookById(userId, bookId);
+        // String result = bookServiceImpl.checkoutBookById(userId, bookId);
 
-        return result;
+        return " ";
     }
 }
 
