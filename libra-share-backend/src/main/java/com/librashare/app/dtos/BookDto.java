@@ -17,11 +17,11 @@ public class BookDto implements Serializable {
     private String description;
     private String image;
     private String author;
-
     private String isbn;
     private String[] genre;
 
     private Float rating;
+
     public BookDto(Book book) {
         if (book.getBookId() != null) {
             this.bookId = book.getBookId();
@@ -44,7 +44,6 @@ public class BookDto implements Serializable {
         if (book.getGenre() != null) {
             this.genre = book.getGenre();
         }
-
 
     }
 }

@@ -20,7 +20,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -138,8 +138,6 @@ public class BookServiceImpl {
     public String deleteBookById(Long userId, Long bookId) {
         Optional<Book> bookOptional = bookRepository.findById(bookId);
         if (bookOptional.isPresent()) {
-            Book book = bookOptional.get();
-//            bookRepository.delete(book);
             deleteUserCopy(userId, bookId);
             return "Successfully deleted book";
         } else {
@@ -153,21 +151,12 @@ public class BookServiceImpl {
         Optional<Book> bookOptional = bookRepository.findById(bookDto.getBookId());
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
-//            if (bookDto.getTitle() != null) {
-//                book.setTitle(bookDto.getTitle());
-//            }
             if (bookDto.getDescription() != null) {
                 book.setDescription(bookDto.getDescription());
             }
-//            if (bookDto.getImage() != null) {
-//                book.setImage(bookDto.getImage());
-//            }
             if (bookDto.getAuthor() != null) {
                 book.setAuthor(bookDto.getAuthor());
             }
-//            if (bookDto.getIsbn() != null) {
-//                book.setIsbn(bookDto.getIsbn());
-//            }
             if (bookDto.getGenre() != null) {
                 book.setGenre(bookDto.getGenre());
             }
@@ -183,19 +172,34 @@ public class BookServiceImpl {
     public void createUserCopy(Long userId, Long bookId) {
         User user = userRepository.findById(userId).orElse(null);
         Book book = bookRepository.findById(bookId).orElse(null);
-        LocalDate lastExchangedDate = LocalDate.of(1900, 1, 1);
-        Boolean exchangeReady = true;
+        LocalDateTime lastExchangedDate = LocalDateTime.of(1900, 1, 1, 0, 0, 0);
+        LocalDateTime expiresAt = lastExchangedDate.plusWeeks(2);
+        Boolean exchangeReady = getExchangeStatus(expiresAt);
 
         if (user != null && book != null) {
             UserCopyDto userCopyDto = new UserCopyDto();
             userCopyDto.setExchangeReady(exchangeReady);
             userCopyDto.setLastExchangedDate(lastExchangedDate);
+            userCopyDto.setExpiresAt(expiresAt);
             UserCopy userCopy = new UserCopy(userCopyDto);
             userCopy.setUserCopyUser(user);
             userCopy.setUserCopyBook(book);
-
             userCopyRepository.saveAndFlush(userCopy);
         } else {
+            throw new RuntimeException("Error creating user copy");
+        }
+    }
+
+    @Transactional
+    public void createUserCopy(Long userId, Long bookId, UserCopyDto userCopyDto) {
+        User user = userRepository.findById(userId).orElse(null);
+        Book book = bookRepository.findById(bookId).orElse(null);
+        try {
+            UserCopy userCopy = new UserCopy(userCopyDto);
+            userCopy.setUserCopyUser(user);
+            userCopy.setUserCopyBook(book);
+            userCopyRepository.saveAndFlush(userCopy);
+        } catch (Exception e) {
             throw new RuntimeException("Error creating user copy");
         }
     }
@@ -212,21 +216,6 @@ public class BookServiceImpl {
 
     }
 
-//    public List<UserBookDto> getAllBookByName(BookDto bookDto) {
-//        if (bookDto.getTitle() != null && !bookDto.getTitle().isEmpty()) {
-//            List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyBookTitle(bookDto.getTitle());
-//            return userCopies.stream()
-//                    .map(userCopy -> new UserBookDto(
-//                            new UserDto(userCopy.getUserCopyUser()),
-//                            new BookDto(userCopy.getUserCopyBook()),
-//                            userCopy.getExchangeReady(),
-//                            userCopy.getLastExchangedDate()
-//                    ))
-//                    .collect(Collectors.toList());
-//        }
-//        return Collections.emptyList();
-//
-//    }
 
     public List<UserBookDto> getAllBookByName(BookDto bookDto) {
         if (bookDto.getTitle() != null && !bookDto.getTitle().isEmpty()) {
@@ -281,18 +270,88 @@ public class BookServiceImpl {
     public List<UserBookDto> getAllBookByUser(Long userId) {
         if (userId != null && userId > 0) {
             List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyUserUserId(userId);
-            List<UserBookDto> userBookDtos = new ArrayList<>();
-            for (UserCopy userCopy : userCopies) {
-                User user = userCopy.getUserCopyUser();
-                Book book = userCopy.getUserCopyBook();
-                UserDto userDto = new UserDto(user);
-                BookDto bookDto = new BookDto(book);
-                bookDto.setRating(ratingService.getAllRatingValueByBook(book.getBookId()));
-                userBookDtos.add(new UserBookDto(userDto, bookDto, userCopy.getExchangeReady(), userCopy.getLastExchangedDate()));
-            }
-            return userBookDtos;
-        } else {
-            return Collections.emptyList();
+            return userCopies.stream()
+                    .map(userCopy -> new UserBookDto(
+                            new UserDto(userCopy.getUserCopyUser()),
+                            new BookDto(userCopy.getUserCopyBook()),
+                            userCopy.getExchangeReady(),
+                            userCopy.getLastExchangedDate()
+                    ))
+                    .collect(Collectors.toList());
         }
+        return Collections.emptyList();
+    }
+
+    @Transactional
+    public synchronized String exchangeBook(Long fromUserId, Long bookId, Long toUserId) {
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        Optional<User> fromUser = userRepository.findById(fromUserId);
+        Optional<User> toUser = userRepository.findById(toUserId);
+        Optional<UserCopy> fromUserCopyOptional = userCopyRepository.findByUserIdAndBookId(fromUserId, bookId);
+        Optional<UserCopy> toUserCopyOptional = userCopyRepository.findByUserIdAndBookId(toUserId, bookId);
+
+        try {
+            if (bookOptional.isPresent() && !toUserCopyOptional.isPresent() && fromUser.isPresent() && toUser.isPresent()) {
+
+                if (fromUserCopyOptional.isPresent()) {
+                    UserCopyDto userCopyDto = new UserCopyDto(fromUserCopyOptional.get());
+                    Boolean exchangeReady = getExchangeStatus(fromUserCopyOptional.get().getExpiresAt());
+                    if (exchangeReady) {
+                        LocalDateTime lastExchangedDate = LocalDateTime.now();
+                        userCopyDto.setLastExchangedDate(lastExchangedDate);
+                        LocalDateTime expiresAt = lastExchangedDate.plusWeeks(2);
+                        userCopyDto.setExpiresAt(expiresAt);
+                        exchangeReady = getExchangeStatus(expiresAt);
+                        userCopyDto.setExchangeReady(exchangeReady);
+
+                        createUserCopy(toUserId, bookId, userCopyDto);
+                        deleteUserCopy(fromUserId, bookId);
+                        return "Successfully Exchanged Book";
+                    } else {
+                        LocalDateTime lastExchangedDate = LocalDateTime.now();
+                        userCopyDto.setLastExchangedDate(lastExchangedDate);
+                        LocalDateTime expiresAt = lastExchangedDate.plusWeeks(2);
+                        userCopyDto.setExpiresAt(expiresAt);
+                        exchangeReady = getExchangeStatus(expiresAt);
+
+                        userCopyDto.setExchangeReady(exchangeReady);
+                        return "Failure to Exchange Book";
+                    }
+
+                }
+                return "" + fromUserCopyOptional.get().getUserCopyUser().getFirstName() + "does not have the book or book already exchanged";
+            } else {
+                return "Book or User does not exist";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    public Boolean getExchangeStatus(LocalDateTime expiresAt) {
+        Boolean exchangeReady;
+        if (expiresAt.isBefore(LocalDateTime.now())) {
+            exchangeReady = true;
+        } else {
+            exchangeReady = false;
+        }
+        return exchangeReady;
+    }
+
+    public Boolean getExchangeStatus(Long UserId, Long BookId) {
+        Optional<UserCopy> userCopyOptional = userCopyRepository.findByUserIdAndBookId(UserId, BookId);
+        Boolean exchangeReady;
+        LocalDateTime expiresAt;
+        if (userCopyOptional.isPresent()) {
+            expiresAt = userCopyOptional.get().getExpiresAt();
+            if (expiresAt.isBefore(LocalDateTime.now())) {
+                exchangeReady = true;
+            } else {
+                exchangeReady = false;
+            }
+        } else {
+            exchangeReady = false;
+        }
+        return exchangeReady;
     }
 }

@@ -1,4 +1,3 @@
-
 INSERT INTO Book (title, description, image, author, isbn, genre)
 VALUES ('To Kill a Mockingbird',
         'A classic novel set in the 1930s South, examining the issues of racial inequality and loss of innocence.',
@@ -48,43 +47,48 @@ VALUES ('To Kill a Mockingbird',
         '9780553213712', ARRAY['Classic']),
        ('In Search of Lost Time',
         'An expansive, multivolume novel by Marcel Proust that explores themes of time, space, and memory.',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp-jhUK5V9xuXSQEFLlD6q7k4NsMqk6qHAt-hQQDhBYoVkHyEViAkRy8HaiVynKrkW0AA&usqp=CAU', 'Marcel Proust',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp-jhUK5V9xuXSQEFLlD6q7k4NsMqk6qHAt-hQQDhBYoVkHyEViAkRy8HaiVynKrkW0AA&usqp=CAU',
+        'Marcel Proust',
         '9780679645689', ARRAY['Classic']),
        ('The Odyssey',
         'Homer''s epic poem recounting the adventures of Odysseus during his return from the Trojan War.',
         'https://m.media-amazon.com/images/I/51S8fUZ6nfL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg', 'Homer',
         '9780143039952', ARRAY['Epic']);
 
-INSERT INTO users (address_line, city, email, first_name, last_name, latitude, longitude, password, phone_number, state, username, zipcode)
-VALUES
-    ('123 Main Street', 'New York', 'john@example.com', 'John', 'Doe', '40.7128', '-74.0060', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'johndoe', '10001'),
-    ('456 Main Street', 'New York', 'johny@example.com', 'John', 'Doe', '40.7129', '-74.0061', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'johnydoe', '10001'),
-    ('456 Elm Street', 'Los Angeles', 'jane@example.com', 'Jane', 'Smith', '34.0522', '-118.2437', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-5678', 'CA', 'janesmith', '90001'),
-    ('789 Oak Street', 'Chicago', 'michael@example.com', 'Michael', 'Johnson', '41.8781', '-87.6298', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-9012', 'IL', 'michaeljohnson', '60601'),
-    ('321 Pine Street', 'Houston', 'sarah@example.com', 'Sarah', 'Davis', '29.7604', '-95.3698', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-3456', 'TX', 'sarahdavis', '77001'),
-    ('654 Maple Street', 'Philadelphia', 'robert@example.com', 'Robert', 'Brown', '39.9526', '-75.1652', '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-7890', 'PA', 'robertbrown', '19101');
+INSERT INTO users (address_line, city, email, first_name, last_name, latitude, longitude, password, phone_number, state,
+                   username, zipcode)
+VALUES ('123 Main Street', 'New York', 'john@example.com', 'John', 'Doe', '40.7128', '-74.0060',
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'johndoe', '10001'),
+       ('456 Main Street', 'New York', 'johny@example.com', 'John', 'Doe', '40.7129', '-74.0061',
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'johnydoe', '10001'),
+       ('456 Elm Street', 'Los Angeles', 'jane@example.com', 'Jane', 'Smith', '34.0522', '-118.2437',
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-5678', 'CA', 'janesmith', '90001'),
+       ('789 Oak Street', 'Chicago', 'michael@example.com', 'Michael', 'Johnson', '41.8781', '-87.6298',
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-9012', 'IL', 'michaeljohnson', '60601'),
+       ('321 Pine Street', 'Houston', 'sarah@example.com', 'Sarah', 'Davis', '29.7604', '-95.3698',
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-3456', 'TX', 'sarahdavis', '77001'),
+       ('654 Maple Street', 'Philadelphia', 'robert@example.com', 'Robert', 'Brown', '39.9526', '-75.1652',
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-7890', 'PA', 'robertbrown', '19101');
 
-INSERT INTO user_copy (last_exchanged_date, exchange_ready, user_id, book_id)
-VALUES
-    ('1900-01-01', true, 1, 1),
-    ('1900-01-01', true, 1, 3),
-    ('1900-01-01', false, 1, 2),
-    ('1900-01-01', true, 2, 4),
-    ('1900-01-01', true, 2, 1),
-    ('1900-01-01', true, 2, 3),
-    ('1900-01-01', true, 3, 2),
-    ('1900-01-01', true, 4, 4),
-    ('1900-01-01', true, 5, 1);
+INSERT INTO user_copy (last_exchanged_date, expires_at, exchange_ready, user_id, book_id)
+VALUES ('1900-01-01', '1900-01-15', true, 1, 1),
+       ('1900-01-01', '1900-01-15', true, 1, 3),
+       ('1900-01-01', '1900-01-15', true, 1, 2),
+       ('1900-01-01', '1900-01-15', true, 2, 4),
+       ('1900-01-01', '1900-01-15', true, 2, 1),
+       ('1900-01-01', '1900-01-15', true, 2, 3),
+       ('1900-01-01', '1900-01-15', true, 3, 2),
+       ('1900-01-01', '1900-01-15', true, 4, 4),
+       ('1900-01-01', '1900-01-15', true, 5, 1);
 
-INSERT INTO rating (comment, last_modified, rating, username,book_id, user_id)
-VALUES
-    ('book 1 of user 1','1900-01-01',1, 'johndoe', 1, 1),
-    ('book 1 of user 2','1900-01-01',2, 'johnydoe', 1, 2),
-    ('book 1 of user 3','1900-01-01',3, 'janesmith', 1, 3),
-    ('book 1 of user 4','1900-01-01',1, 'michaeljohnson', 1, 4),
-    ('book 2 of user 1','1900-01-01',2, 'johndoe', 2, 1),
-    ('book 2 of user 2','1900-01-01',2, 'johnydoe', 2, 2),
-    ('book 3 of user 1','1900-01-01',2, 'johndoe', 3, 1),
-    ('book 3 of user 2','1900-01-01',2, 'johnydoe', 3, 2),
-    ('book 3 of user 3','1900-01-01',2, 'janesmith', 3, 3);
+INSERT INTO rating (comment, last_modified, rating, username, book_id, user_id)
+VALUES ('book 1 of user 1', '1900-01-01', 1, 'johndoe', 1, 1),
+       ('book 1 of user 2', '1900-01-01', 2, 'johnydoe', 1, 2),
+       ('book 1 of user 3', '1900-01-01', 3, 'janesmith', 1, 3),
+       ('book 1 of user 4', '1900-01-01', 1, 'michaeljohnson', 1, 4),
+       ('book 2 of user 1', '1900-01-01', 2, 'johndoe', 2, 1),
+       ('book 2 of user 2', '1900-01-01', 2, 'johnydoe', 2, 2),
+       ('book 3 of user 1', '1900-01-01', 2, 'johndoe', 3, 1),
+       ('book 3 of user 2', '1900-01-01', 2, 'johnydoe', 3, 2),
+       ('book 3 of user 3', '1900-01-01', 2, 'janesmith', 3, 3);
 

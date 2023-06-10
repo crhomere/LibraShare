@@ -51,6 +51,11 @@ public class BookController {
         return bookServiceImpl.getAllBooks();
     }
 
+    @GetMapping("/status/{userId}/{bookId}")
+    public Boolean getExchangeStatus(@PathVariable Long userId, @PathVariable Long bookId) {
+        return bookServiceImpl.getExchangeStatus(userId, bookId);
+    }
+
     @PostMapping("/{userId}/add")
     public String addBook(@PathVariable Long userId, @RequestBody BookDto bookDto) {
         return bookServiceImpl.addBook(bookDto, userId);
@@ -65,5 +70,10 @@ public class BookController {
     public void updateBook(@PathVariable Long bookId, @RequestBody BookDto bookDto) {
         bookDto.setBookId(bookId);
         bookServiceImpl.updateBookById(bookDto);
+    }
+
+    @PutMapping("exchange/{fromUserId}/{bookId}/{toUserId}")
+    public String exchangeBook(@PathVariable Long fromUserId, @PathVariable Long bookId, @PathVariable Long toUserId) {
+        return bookServiceImpl.exchangeBook(fromUserId, bookId, toUserId);
     }
 }

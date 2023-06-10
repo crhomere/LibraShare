@@ -96,8 +96,8 @@ public class RatingService {
     public Float getAllRatingValueByBook(Long bookId) {
         Float ratingValue = 0f;
         Optional<Book> bookOptional = bookRepository.findById(bookId);
-        if (bookOptional.isPresent()){
-             ratingValue =  ratingRepository.getAvgRatingByBook(bookId);
+        if (bookOptional.isPresent()) {
+            ratingValue = ratingRepository.getAvgRatingByBook(bookId);
         }
         return ratingValue;
 
