@@ -270,16 +270,19 @@ public class BookServiceImpl {
     public List<UserBookDto> getAllBookByUser(Long userId) {
         if (userId != null && userId > 0) {
             List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyUserUserId(userId);
-            return userCopies.stream()
-                    .map(userCopy -> new UserBookDto(
-                            new UserDto(userCopy.getUserCopyUser()),
-                            new BookDto(userCopy.getUserCopyBook()),
-                            userCopy.getExchangeReady(),
-                            userCopy.getLastExchangedDate()
-                    ))
-                    .collect(Collectors.toList());
+            List<UserBookDto> userBookDtos = new ArrayList<>();
+            for (UserCopy userCopy : userCopies) {
+                User user = userCopy.getUserCopyUser();
+                Book book = userCopy.getUserCopyBook();
+                UserDto userDto = new UserDto(user);
+                BookDto bookDto = new BookDto(book);
+                bookDto.setRating(ratingService.getAllRatingValueByBook(book.getBookId()));
+                userBookDtos.add(new UserBookDto(userDto, bookDto, userCopy.getExchangeReady(), userCopy.getLastExchangedDate()));
+            }
+            return userBookDtos;
+        } else {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 
     @Transactional
@@ -355,3 +358,4 @@ public class BookServiceImpl {
         return exchangeReady;
     }
 }
+
