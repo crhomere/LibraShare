@@ -55,7 +55,7 @@ const HomePage = () => {
       <SearchBar />
       <Row>
         {books.map((book) => {
-          const isOwnedByLoggedInUser = book.userDto?.id === user.id;
+          // const isOwnedByLoggedInUser = book.userDto?.id === user.id;
           const disableExchange = disabledBooksMap[book.bookDto.title];
 
           return (
