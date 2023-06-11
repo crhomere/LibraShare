@@ -28,12 +28,12 @@ const SearchBar = () => {
                 placeholder="Enter Zip code"
                 aria-label="Search"
               />
-              <input
+              {/* <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Enter book title"
                 aria-label="Search"
-              />
+              /> */}
               <button className="btn search-book-btn" type="submit">
                 Search
               </button>
