@@ -1,0 +1,11 @@
+.navbar {
+    border-bottom: .5px solid rgb(240, 232, 232);
+   
+}
+
+.greeting-container {
+    display: flex;
+    gap: 5px;
+}
+
+

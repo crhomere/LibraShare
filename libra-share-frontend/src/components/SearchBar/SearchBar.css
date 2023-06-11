@@ -1,0 +1,14 @@
+.search-book-btn {
+  background-color: rgb(79, 61, 57);
+  color: white;
+}
+
+.search-book-btn:hover {
+  cursor: pointer;
+  background-color: rgb(195, 176, 144);
+}
+
+#map-container {
+  height: 0 !important;
+  min-height: 5rem;
+}

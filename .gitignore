@@ -1,0 +1,45 @@
+# Default ignored files
+/libra-share-backend/shelf/
+/libra-share-backend/.idea/workspace.xml
+# Editor-based HTTP Client requests
+/libra-share-backend/httpRequests/
+# Datasource local storage ignored files
+/libra-share-backend/dataSources/
+/dataSources.local.xml
+/libra-share-backend/.idea/
+/libra-share-backend/HELP.md
+/libra-share-backend/mvnw
+/libra-share-backend/mvnw.cmd
+/libra-share-backend/src/main/resources/env.properties
+
+/libra-share-backend/target/
+/libra-share-backend/librashare.iml
+
+.idea/
+.vscode/
+.DS_Store
+#Front end
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/libra-share-frontend/node_modules
+/libra-share-frontend/.pnp
+/libra-share-frontend/.pnp.js
+
+# testing
+/libra-share-frontend/coverage
+
+# production
+/libra-share-frontend/build
+
+# misc
+/libra-share-frontend/.DS_Store
+/libra-share-frontend/.env.local
+/libra-share-frontend/.env.development.local
+/libra-share-frontend/.env.test.local
+/libra-share-frontend/.env.production.local
+
+/libra-share-frontend/npm-debug.log*
+/libra-share-frontend/yarn-debug.log*
+/libra-share-frontend/yarn-error.log*

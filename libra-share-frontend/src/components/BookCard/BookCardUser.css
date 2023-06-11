@@ -1,0 +1,57 @@
+.book-card-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-text,
+.card-title {
+  margin: 0 1rem;
+}
+
+.card-title {
+  font-weight: 600;
+}
+.author-header,
+.description-header {
+  font-weight: 600;
+}
+
+.book-info {
+  width: 30%;
+}
+
+.book-title {
+  width: 60%;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-book-btn,
+.rate-book-btn,
+.delete-book-btn {
+  border: 0.5px solid #212529;
+  background-color: transparent !important;
+  color: #212529;
+}
+
+@media (max-width: 768px) {
+  .book-card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .book-info,
+  .book-title,
+  .actions {
+    width: 100%;
+  }
+
+  .book-info {
+    margin-bottom: 1rem;
+  }
+}

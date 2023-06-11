@@ -1,0 +1,19 @@
+.nav-link {
+  color: #2e302f;
+}
+
+.nav-link:hover {
+  color: rgb(201, 181, 159);
+  cursor: pointer;
+}
+
+.nav-link:active,
+.nav-link:focus,
+.nav-link:visited {
+  color: #2e302f;
+  font-weight: bold;
+}
+
+.nav-link.active {
+  font-weight: bold;
+}

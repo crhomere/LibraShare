@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  /* background-color: #F7F6F6; */
+}
+
+.form-control:focus {
+  border-color: #2e302f;
+  box-shadow: none;
+  background: white;
+}
