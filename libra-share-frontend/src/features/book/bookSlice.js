@@ -5,12 +5,14 @@ const BASE_URL_BOOKS = 'http://localhost:8080/api/v1/librashare/books';
 const endpointAllBooks = '/all';
 const endpointAllBooksByZipcode = '/zipcode/';
 const endpointUserBooks = '/user/';
+const endpointExchangeBook = '/exchange';
 
 export const fetchAllBooks = createAsyncThunk(
   'books/fetchAllBooks',
   async (_, thunkAPI) => {
     try {
       const response = await axios.get(`${BASE_URL_BOOKS}${endpointAllBooks}`);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -87,6 +89,25 @@ export const deleteBook = createAsyncThunk(
   }
 );
 
+
+export const exchangeBook = createAsyncThunk(
+  'books/exchangeBook',
+  async ({ fromUserId, bookId, toUserId }, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `${BASE_URL_BOOKS}${endpointExchangeBook}/${fromUserId}/${bookId}/${toUserId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+
+
+
+
 const bookSlice = createSlice({
   name: 'books',
   initialState: {
@@ -104,6 +125,11 @@ const bookSlice = createSlice({
       })
       .addCase(fetchAllBooks.fulfilled, (state, action) => {
         state.books = action.payload;
+        state.userBooks = action.payload.map((item) => ({
+          userDto: item.userDto,
+          bookDto: item.bookDto,
+          exchangeReady: item.exchangeReady,
+        }));
         state.loading = false;
         state.error = null;
       })
@@ -194,6 +220,18 @@ const bookSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteBook.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(exchangeBook.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(exchangeBook.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(exchangeBook.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -1,14 +1,15 @@
 package com.librashare.app.dtos;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 
 public class UserBookDto {
     private UserDto userDto;
     private BookDto bookDto;
-    private boolean exchangeReady;
-    private LocalDate lastExchangedDate;
+    private Boolean exchangeReady;
+    private LocalDateTime lastExchangedDate;
 
-    public UserBookDto(UserDto userDto, BookDto bookDto, boolean exchangeReady, LocalDate lastExchangedDate) {
+    public UserBookDto(UserDto userDto, BookDto bookDto, Boolean exchangeReady, LocalDateTime lastExchangedDate) {
         this.userDto = userDto;
         this.bookDto = bookDto;
         this.exchangeReady = exchangeReady;

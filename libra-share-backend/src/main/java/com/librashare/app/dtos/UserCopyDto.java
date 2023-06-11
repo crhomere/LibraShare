@@ -6,14 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserCopyDto implements Serializable {
     private Long userCopyId;
-    private LocalDate lastExchangedDate;
+    private LocalDateTime lastExchangedDate;
+    private LocalDateTime expiresAt;
     private Boolean exchangeReady;
 
     public UserCopyDto(UserCopy userCopy) {
@@ -23,8 +24,8 @@ public class UserCopyDto implements Serializable {
         if (userCopy.getLastExchangedDate() != null) {
             this.lastExchangedDate = userCopy.getLastExchangedDate();
         }
-        if (userCopy.getExchangeReady() != null) {
-            this.exchangeReady = userCopy.getExchangeReady();
+        if (userCopy.getExpiresAt() != null) {
+            this.expiresAt = userCopy.getExpiresAt();
         }
     }
 
