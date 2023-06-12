@@ -24,7 +24,7 @@ const HomePage = () => {
       console.log('book?.userDto?.id', book?.userDto?.id);
       console.log('user.id ', user.id);
       if (book?.userDto?.id === user.id) {
-        userOwnedBooksMap[book.bookDto.title] = true;
+        userOwnedBooksMap[book.bookDto?.title] = true;
       }
     });
 
@@ -56,7 +56,7 @@ const HomePage = () => {
       <Row>
         {books.map((book) => {
           // const isOwnedByLoggedInUser = book.userDto?.id === user.id;
-          const disableExchange = disabledBooksMap[book.bookDto.title];
+          const disableExchange = disabledBooksMap[book.bookDto?.title];
 
           return (
             <Col key={book.id} sm={4}>
@@ -64,7 +64,7 @@ const HomePage = () => {
                 book={book}
                 {...book.bookDto}
                 {...book.userDto}
-                genre={book.bookDto.genre[0]}
+                genre={book.bookDto?.genre[0]}
                 onUpdateRating={handleRatingUpdate}
                 onExchangeBook={handleExchangeBook}
                 disableExchange={disableExchange}
