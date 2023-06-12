@@ -1,11 +1,21 @@
+.add-book-container {
+}
+
+.add-book {
+  background-color: #f7f6f6;
+  margin: 5rem;
+  padding: 5rem;
+
+  border-radius: 2px;
+}
 .custom-input {
-  width: 30%;
+  width: 50%;
   margin: auto;
 }
 
 .add-book-btn {
   margin-top: 1rem;
-  width: 30%;
+  width: 50%;
   background-color: rgb(79, 61, 57);
   color: white;
   border: none;
@@ -14,5 +24,5 @@
 
 .add-book-btn:hover {
   cursor: pointer;
-  background-color: rgb(195, 176, 144);
+  background-color: transparent !important;
 }
