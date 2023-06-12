@@ -1,3 +1,5 @@
+<a name="Table of Contents"></a>
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
@@ -21,16 +23,23 @@
   - [3. Book Checkout](#3-book-checkout)
   - [4. Review and Rating System](#4-review-and-rating-system)
 - [Installation and Setup](#installation-and-setup)
+  - [Required downloads](#required-downloads)
+  - [PostgreSQL Database Setup](#postgresql-database-setup)
   - [Clone the Repository](#clone-the-repository)
   - [Navigate to the Project Directory](#navigate-to-the-project-directory)
   - [Running the Frontend](#running-the-frontend)
   - [Running the Backend](#running-the-backend)
 - [Getting Started](#getting-started)
 - [API Documentation](#api-documentation)
+- [Application Walkthrough](#application-walkthrough)
+
+<a name="System Overview"></a>
 
 ## System Overview
 
 Our decentralized library system is a web-based application that allows users to access a database of books and interact with other users. Our system enables users to leave reviews and ratings for books, check out physical copies of books, and facilitates the transfer of books between users. We utilize ReactJS for the frontend, Java for the backend, the Google Maps API, and PostgreSQL for the database management.
+
+<a name="System Components"></a>
 
 ## System Components
 
@@ -137,12 +146,40 @@ The system architecture can be divided into the following layers:
 - Enable users to leave reviews and ratings for books.
 - Implement a rating system that aggregates user ratings and displays an average rating for each book.
 
-<p float="left">
-  <img src="libra-share-frontend/src/images/ratings1.png" width="400" alt="Ratings form"> ->
-  <img src="libra-share-frontend/src/images/ratings2.png" width="400" alt="Ratings form populated">
-</p>
+<a name="Installation and Setup"></a>
 
 ## Installation and Setup
+
+<a name="Required downloads"></a>
+
+### Required downloads
+
+- Java 17
+- Spring-boot
+- Maven
+- PostgreSQL
+- Node.js
+- NPM
+
+<a name="PostgreSQL Database Setup"></a>
+
+### PostgreSQL Database Setup
+
+Before you start, make sure you have PostgreSQL installed on your system. If not, download and install it from the official [the official PostgreSQL site](https://www.postgresql.org/download/).
+
+To set up the "librashare" PostgreSQL database, follow these steps:
+
+1. Open your command line interface and start PostgreSQL with the psql command.
+2. Create the "librashare" database with this command:
+   ```
+   CREATE DATABASE librashare;
+   ```
+3. Connect to the new database with this command:
+   ```
+   \c librashare
+   ```
+
+Now, you're ready to use your "librashare" database.
 
 <a name="Clone the Repository"></a>
 
@@ -152,17 +189,66 @@ The system architecture can be divided into the following layers:
 git clone https://github.com/crhomere/LibraShare.git
 ```
 
+<a name="Navigate to the Project Directory"></a>
+
 ### Navigate to the Project Directory
 
 ```
 cd LibraShare
 ```
 
+<a name="Running the Frontend"></a>
+
 ### Running the Frontend
+
+1. open a new terminal
+2. Navigate to frontend directory
+
+```
+cd libra-share-frontend/
+```
+
+Install dependencies: Navigate to your project directory in the terminal and run the following command to install the project dependencies
+
+```
+npm install
+
+```
+
+Start the application: Start the React application by running
+
+```
+npm start
+
+```
+
+<a name="Running the Backend"></a>
 
 ### Running the Backend
 
+Open a new terminal (do not close the terminal running the frontend)
+
+Build the application: Navigate to your backend project directory in the terminal and run the following command to build the application
+
+```
+mvn clean install
+
+```
+
+Start the application: Start the Spring Boot application by running
+
+```
+mvn spring-boot:run
+
+```
+
+<a name="Getting Started"></a>
+
 ## Getting Started
+
+Now Librashare should be accessible from [port 8080](http://localhost:8080)
+
+<a name="API Documentation"></a>
 
 ## API Documentation
 
@@ -187,3 +273,53 @@ Here is a brief overview of the API endpoints available:
 | `GET`    | `/books/zipcode/{zip code}`        | Get books by zip code     |
 | `GET`    | `/books/user/{user id}`            | Get books by user         |
 | `GET`    | `/books/{isbn}`                    | Get book by ISBN          |
+
+<a name="Application Walkthrough"></a>
+
+## Application Walkthrough
+
+Home page: The prominently placed "Enter Library" button invites users to delve into the library's collections and resources.
+
+<img src="libra-share-frontend/src/images/home.png" width="600" alt="Home page">
+
+Welcome page: Entry into the librashare app utilizing register for new users or log in features for existing users.
+
+<img src="libra-share-frontend/src/images/welcome-page.png" width="600" alt="Welcome page">
+
+Register page: New users are able to register for Librashare.
+
+<img src="libra-share-frontend/src/images/register.png" width="600" alt="Register page">
+
+Log In page: Existing users are able to log into Librashare.
+
+<img src="libra-share-frontend/src/images/login.png" width="600" alt="Log In page">
+
+Here we demonstrate that if a book with the same title as the one the logged-in user has is available for exchange, the option to exchange will be disabled for that user.
+
+<p float="left">
+  <img src="libra-share-frontend/src/images/exchange1.png" width="400" alt="Exhange photo 1"> ->
+  <img src="libra-share-frontend/src/images/exchange2.png" width="400" alt="Exchange photo 2">
+</p>
+
+Ratings and review: Users can add ratings and reviews for books.
+
+<p float="left">
+  <img src="libra-share-frontend/src/images/ratings1.png" width="400" alt="Ratings form"> ->
+  <img src="libra-share-frontend/src/images/ratings2.png" width="400" alt="Ratings form populated">
+</p>
+
+CRUD functionalities for books, book information, and user rating.
+
+<p float="left">
+  <img src="libra-share-frontend/src/images/CRUD-book.png" width="350" alt="CRUD book functionality">
+  <img src="libra-share-frontend/src/images/CRUD-book-info.png" width="350" alt="CRUD book info functionality">
+  <img src="libra-share-frontend/src/images/CRUD-rating.png" width="350" alt="CRUD user rating functionality"> 
+</p>
+
+Account page: Users can view their personal user dashboard.
+
+<img src="libra-share-frontend/src/images/user-account-overview.png" width="600" alt="User account overview">
+
+Error page: Error handling page to notify users of a broken link.
+
+<img src="libra-share-frontend/src/images/page-not-found.png" width="600" alt="Page not found">
