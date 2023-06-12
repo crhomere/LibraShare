@@ -9,7 +9,7 @@
   - [4. External API Usage](#4-external-api-usage)
     - [ Google Maps API](#-google-maps-api)
     - [ Open Library API](#-open-library-api)
-    - [ Address API](#-address-api)
+    - [ YAddress API](#-yaddress-api)
 - [System Architecture](#system-architecture)
   - [1. Presentation Layer](#1-presentation-layer)
   - [2. Application Layer](#2-application-layer)
@@ -30,7 +30,7 @@
 
 ## System Overview
 
-Our decentralized library system is a web-based application that allows users to access a database of books and interact with other users. Our system enables users to leave reviews and ratings for books, check out physical copies of books, and facilitates the transfer of books between users. We utilize ReactJS for the frontend, Java/Bootstrap for the backend, the Google Maps API for location tracking, and PostgreSQL for the database management.
+Our decentralized library system is a web-based application that allows users to access a database of books and interact with other users. Our system enables users to leave reviews and ratings for books, check out physical copies of books, and facilitates the transfer of books between users. We utilize ReactJS for the frontend, Java for the backend, the Google Maps API, and PostgreSQL for the database management.
 
 ## System Components
 
@@ -45,13 +45,12 @@ Our decentralized library system is a web-based application that allows users to
 ### 2. Backend
 
 - Java: We will use Java as the backend programming language to handle the business logic of our application.
-- Bootstrap: We will implement the Bootstrap framework to create a responsive and mobile-friendly UI design.
 
 <a name="database"></a>
 
 ### 3. Database
 
-- PostgreSQL: We will utilize PostgreSQL as the database management system to store information about books, users, reviews, and book transactions.
+- PostgreSQL: We will utilize PostgreSQL as the database management system to store information about books, users, and book reviews.
 
 <a name="External API Usage"></a>
 
@@ -63,11 +62,11 @@ The Google Maps API is leveraged to identify the nearest physical book to the re
 
 #### <div align="center"> Open Library API
 
-The [Open Library API](https://openlibrary.org/developers/api) is a freely accessible API that allows us to fetch detailed book information such as author, publication date, genre, and book summary. We utilize this API to ensure that the book data we present to our users is accurate and up-to-date. The Open Library API plays a crucial role in our Book Management feature, enabling users to search and view comprehensive book details.
+The [Open Library API](https://openlibrary.org/developers/api) is a freely accessible API that allows us to fetch detailed book information such as author, publication date, genre, and book summary among others. We utilize this API to ensure that the book data we present to our users is valid, accurate, and up-to-date. The Open Library API plays a crucial role in our Book Management feature, enabling users to search and view comprehensive book details.
 
-#### <div align="center"> Address API
+#### <div align="center"> YAddress API
 
-The Address API is used for verifying and standardizing the addresses provided by our users. This API assists us in ensuring that the user's location data is accurate, which is critical for our service as we rely on precise user locations to facilitate the transfer of physical books. The Address API takes a user's provided address, verifies its validity, and returns a standardized version of the address that ensures consistency in our database and improves the accuracy of the location data we use with the Google Maps API.
+The [YAddress API](https://www.yaddress.net/WebApi) is used for verifying and standardizing the addresses provided by our users. This API assists us in ensuring that the user's location data is accurate, which is critical for our service as we rely on precise user locations to facilitate the transfer of physical books. The YAddress API takes a user's provided address, verifies its validity, and returns a standardized version of the address that ensures consistency in our database and improves the accuracy of the location data we use with the Google Maps API.
 
 ## System Architecture
 
@@ -94,7 +93,9 @@ The system architecture can be divided into the following layers:
 ### 3. Data Layer
 
 - Database: We will utilize PostgreSQL as the database management system to store and retrieve data related to books, users, reviews, and transactions.
-- Database Schema: We will design an efficient database schema that represents entities such as books, users, reviews, and transactions, and establish appropriate relationships between them.
+- Database Schema: We will design an efficient database schema that represents entities such as books, users, reviews, and establish appropriate relationships between them.
+
+<img src="libra-share-frontend/src/images/librashare_schema.png" width="600" alt="Ratings form">
 
 <a name="Integration Layer"></a>
 
@@ -117,7 +118,7 @@ The system architecture can be divided into the following layers:
 
 ### 2. User Management
 
-- Maintain user profiles with information such as name, contact details, and borrowing history.
+- Maintain user profiles with information such as name, contact details, and history.
 - Implement user registration and authentication mechanisms.
 - Provide user roles (e.g., admin, regular user) to manage system access and privileges.
 
@@ -127,7 +128,7 @@ The system architecture can be divided into the following layers:
 
 - Identify the nearest physical book to the requesting user using the Google Maps API.
 - Facilitate book transfer between users by updating the book's ownership in the database.
-- Enforce a one-week waiting period before a checked-out book can be checked out again.
+- Enforce a two-week waiting period before a checked-out book can be checked out again.
 
 <a name="Review and Rating System"></a>
 
@@ -135,6 +136,11 @@ The system architecture can be divided into the following layers:
 
 - Enable users to leave reviews and ratings for books.
 - Implement a rating system that aggregates user ratings and displays an average rating for each book.
+
+<p float="left">
+  <img src="libra-share-frontend/src/images/ratings1.png" width="400" alt="Ratings form"> ->
+  <img src="libra-share-frontend/src/images/ratings2.png" width="400" alt="Ratings form populated">
+</p>
 
 ## Installation and Setup
 
