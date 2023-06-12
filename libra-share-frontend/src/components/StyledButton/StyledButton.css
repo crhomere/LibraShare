@@ -1,0 +1,24 @@
+.styled-btn {
+  background-color: rgb(79, 61, 57);
+  color: white;
+  border: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.styled-btn:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  background-color: rgb(91, 72, 67);
+  cursor: not-allowed;
+}
+
+.styled-btn:hover,
+.styled-btn:active,
+.styled-btn:visited,
+.styled-btn:focus {
+  transform: scale(1);
+  background-color: white !important;
+  border: 1px solid #2e302f !important;
+  color: #2e302f !important;
+  outline: none !important;
+}

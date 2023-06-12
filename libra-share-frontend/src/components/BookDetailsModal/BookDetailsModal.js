@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { renderRatingStars } from '../../utils/renderRatingStars';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { addRating } from '../../features/rating/ratingSlice';
+import StyledButton from '../StyledButton/StyledButton';
 
 import './BookDetailsModal.css';
 
@@ -60,6 +61,9 @@ const BookDetailsModal = ({
             <span className="header">Author:</span> {book.author}
           </p>
           <p>
+            <span className="header">Title:</span> {book.title}
+          </p>
+          <p>
             <span className="header">Genre:</span> {book.genre}
           </p>
           <p>
@@ -72,7 +76,7 @@ const BookDetailsModal = ({
       </Modal.Body>
       <Modal.Footer></Modal.Footer>
 
-      <Form onSubmit={handleAddReview}>
+      <Form onSubmit={handleAddReview} className='rating-container'>
         <Form.Group controlId="rating">
           <Form.Label>Rating:</Form.Label>
           <Form.Control
@@ -101,7 +105,7 @@ const BookDetailsModal = ({
             onChange={(e) => setComment(e.target.value)}
           />
         </Form.Group>
-        <Button variant="secondary" type="submit" disabled={isSubmitDisabled}>
+        <Button className='submit-review-btn' variant="secondary" type="submit" disabled={isSubmitDisabled}>
           Submit Review
         </Button>
       </Form>
