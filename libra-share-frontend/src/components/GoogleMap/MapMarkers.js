@@ -37,6 +37,7 @@ const MapMarkers = ({ bookLocations }) => {
     map.setCenter(initialBounds.getCenter());
 
     setMarkers(bookLocationMarkers);
+    map.fitBounds(initialBounds);
 
     // Clean up markers
     return () => {

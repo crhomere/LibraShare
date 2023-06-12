@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';
 import MapMarkers from './MapMarkers'
+import {REACT_APP_API_KEY} from '../../constants.js';
 import axios from 'axios';
 
 const GoogleMap = ({ zipCode, zoom, bookLocations }) => {
   const [coordinates, setCoordinates] = useState(null);
   const [mapContainer, setMapContainer] = useState(null);
-  const apiKey = process.env.REACT_APP_API_KEY;
+  const apiKey = REACT_APP_API_KEY;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
