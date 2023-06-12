@@ -4,26 +4,28 @@ import GoogleMap from '../GoogleMap/Map.js';
 
 import './SearchBar.css';
 
-const SearchBar = ({ onZipcodeChange, onZipcodeSubmit }) => {
+const SearchBar = ({ onZipcodeChange, onZipcodeSubmit, userZipcode, setshowMap, showMap, bookLocations, setBookLocations }) => {
   const [zipCode, setZipCode] = useState('');
   const [zoom, setZoom] = useState(10);
-  const [showMap, setShowMap] = useState(false);
   const [searchedZipCode, setSearchedZipCode] = useState('');
 
   useEffect(() => {
-    if (searchedZipCode) {
-      setShowMap(true);
+    if (Array.isArray(bookLocations)) {
+      console.log(bookLocations);
+      const filteredBookLocations = bookLocations.filter(book => book.zipcode == searchedZipCode);
+      // update the bookLocations state with the filtered array
+      setBookLocations(filteredBookLocations)
     }
   }, [searchedZipCode]);
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     // Perform any necessary validation or data processing here
     // Set the searchedZipCode state after search button is pressed
-    onZipcodeSubmit(e);
     setSearchedZipCode(zipCode);
-  
-    console.log(zipCode);
-  };  
+    onZipcodeSubmit(e);
+    setshowMap(false);
+  };
 
   const handleInputChange = (e) => {
     setZipCode(e.target.value);
@@ -60,12 +62,10 @@ const SearchBar = ({ onZipcodeChange, onZipcodeSubmit }) => {
         </form>
         {showMap && (
           <div id="map-container" style={{ width: '100%', height: '400px' }}>
-            <GoogleMap zipCode={searchedZipCode} zoom={zoom} />
+            <GoogleMap zipCode={searchedZipCode || userZipcode} zoom={zoom} bookLocations={bookLocations} />
           </div>
         )}
       </div>
-
-      {/* Other search bar elements */}
     </div>
   );
 };
