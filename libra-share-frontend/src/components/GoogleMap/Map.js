@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';
+import MapMarkers from './MapMarkers'
 import axios from 'axios';
 
-const GoogleMap = ({ zipCode, zoom }) => {
+const GoogleMap = ({ zipCode, zoom, bookLocations }) => {
   const [coordinates, setCoordinates] = useState(null);
   const [mapContainer, setMapContainer] = useState(null);
   const apiKey = process.env.REACT_APP_API_KEY;
@@ -48,6 +49,7 @@ const GoogleMap = ({ zipCode, zoom }) => {
       ) : (
         <React.StrictMode>
           <div ref={mapRef} style={{ height: '100%', width: '90%'}} />
+          <MapMarkers bookLocations={bookLocations}/>
         </React.StrictMode>
       )}
     </GoogleMapsProvider>

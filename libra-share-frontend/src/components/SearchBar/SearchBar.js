@@ -4,12 +4,18 @@ import GoogleMap from '../GoogleMap/Map.js';
 
 import './SearchBar.css';
 
-const SearchBar = ({ onZipcodeChange, onZipcodeSubmit, userZipcode, setshowMap, showMap }) => {
+const SearchBar = ({ onZipcodeChange, onZipcodeSubmit, userZipcode, setshowMap, showMap, bookLocations, setBookLocations }) => {
   const [zipCode, setZipCode] = useState('');
   const [zoom, setZoom] = useState(10);
   const [searchedZipCode, setSearchedZipCode] = useState('');
 
   useEffect(() => {
+    if (Array.isArray(bookLocations)) {
+      console.log(bookLocations);
+      const filteredBookLocations = bookLocations.filter(book => book.zipcode == searchedZipCode);
+      // update the bookLocations state with the filtered array
+      setBookLocations(filteredBookLocations)
+    }
   }, [searchedZipCode]);
 
   const handleSearch = (e) => {
@@ -56,7 +62,7 @@ const SearchBar = ({ onZipcodeChange, onZipcodeSubmit, userZipcode, setshowMap, 
         </form>
         {showMap && (
           <div id="map-container" style={{ width: '100%', height: '400px' }}>
-            <GoogleMap zipCode={searchedZipCode || userZipcode} zoom={zoom} />
+            <GoogleMap zipCode={searchedZipCode || userZipcode} zoom={zoom} bookLocations={bookLocations} />
           </div>
         )}
       </div>

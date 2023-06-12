@@ -15,6 +15,8 @@ const HomePage = () => {
   const { books, loading, error } = useSelector((state) => state.books);
   const { user } = useSelector((store) => store.user);
   const [disabledBooksMap, setDisabledBooksMap] = useState({});
+  const [bookLocations, setBookLocations] = useState({});
+  const [bookLocationCopy, setBookLocationCopy] = useState({});
 
   useEffect(() => {
     dispatch(fetchAllBooks());
@@ -24,14 +26,26 @@ const HomePage = () => {
     const userOwnedBooksMap = {};
 
     books.forEach((book) => {
-      console.log('book?.userDto?.id', book?.userDto?.id);
-      console.log('user.id ', user.id);
       if (book?.userDto?.id === user.id) {
         userOwnedBooksMap[book.bookDto.title] = true;
       }
     });
 
+    let booksOwned = [];
+    books.forEach((book) => {
+      if (book.userDto) {
+        booksOwned.push({
+          zipcode: book.userDto.zipcode,
+          name: book.userDto.firstName,
+          position: { lat: +book.userDto.latitude, lng: +book.userDto.longitude }
+        });
+      }
+    });
+
+    setBookLocations(booksOwned);
+    setBookLocationCopy(booksOwned);
     setDisabledBooksMap(userOwnedBooksMap);
+
   }, [books, user.id]);
 
   useEffect(() => {
@@ -61,7 +75,12 @@ const HomePage = () => {
   const handleZipcodeSubmit = (e) => {
     e.preventDefault();
     setSearchedZipCode(zipcode);
+    resetBookLocations();
   };
+
+  const resetBookLocations = () => {
+    setBookLocations(bookLocationCopy);
+  }
 
   return (
     <div>
@@ -72,27 +91,29 @@ const HomePage = () => {
         userZipcode={user.zipcode}
         showMap={showMap}
         setshowMap={setshowMap}
+        bookLocations={bookLocations}
+        setBookLocations={setBookLocations}
       />
-        <Row>
-          {books.map((book) => {
-            const isOwnedByLoggedInUser = book.userDto?.id === user.id;
-            const disableExchange = disabledBooksMap[book.bookDto.title];
+      <Row>
+        {books.map((book) => {
+          const isOwnedByLoggedInUser = book.userDto?.id === user.id;
+          const disableExchange = disabledBooksMap[book.bookDto.title];
 
-            return !searchedZipCode || searchedZipCode == book.userDto?.zipcode ? (
-              <Col key={book.id} sm={4}>
-                <BookCard
-                  book={book}
-                  {...book.bookDto}
-                  {...book.userDto}
-                  genre={book.bookDto.genre[0]}
-                  onUpdateRating={handleRatingUpdate}
-                  onExchangeBook={handleExchangeBook}
-                  disableExchange={disableExchange}
-                />
-              </Col>
-            ) : null
-          })}
-        </Row>
+          return !searchedZipCode || searchedZipCode == book.userDto?.zipcode ? (
+            <Col key={book.id} sm={4}>
+              <BookCard
+                book={book}
+                {...book.bookDto}
+                {...book.userDto}
+                genre={book.bookDto.genre[0]}
+                onUpdateRating={handleRatingUpdate}
+                onExchangeBook={handleExchangeBook}
+                disableExchange={disableExchange}
+              />
+            </Col>
+          ) : null
+        })}
+      </Row>
     </div>
   );
 };
