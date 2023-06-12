@@ -20,8 +20,12 @@ const BookCard = ({
   id,
   firstName,
   lastName,
+  city,
+  state,
+  zipcode,
   onExchangeBook,
   disableExchange,
+  searchedZipCode
 }) => {
   const [showModal, setShowModal] = useState(false);
   const { user } = useSelector((store) => store.user);
@@ -44,7 +48,7 @@ const BookCard = ({
     }
   };
 
-  return (
+  return !searchedZipCode || searchedZipCode == zipcode ? (
     <div className="book-card-container" onClick={handleOpenModal}>
       <Card className="book-card">
         <Card.Img variant="top" src={image} className="book-card-image" />
@@ -55,6 +59,9 @@ const BookCard = ({
           <Card.Text>Genre: {genre}</Card.Text>
           <Card.Text>
             Owner: {firstName} {lastName}
+          </Card.Text>
+          <Card.Text>
+            Location: {city + ", " + state + " " + zipcode}
           </Card.Text>
         </Card.Body>
         <Button
@@ -80,7 +87,7 @@ const BookCard = ({
         handleCloseModal={handleCloseModal}
       />
     </div>
-  );
+  ) : null;
 };
 
 export default BookCard;

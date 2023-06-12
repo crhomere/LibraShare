@@ -24,9 +24,11 @@ public class LibrashareApplication {
 //		String dbUrl = props. getProperty ( "DB _URL") ;
         String dbUser = props.getProperty("DB_USERNAME");
         String dbPassword = props.getProperty("DB_PASSWORD");
+        //String mapsApiKey = props.getProperty("API_KEY");
 //		System.setProperty("spring.datasource.url",dbUrl);
         System.setProperty("spring.datasource.username", dbUser);
         System.setProperty("spring.datasource.password", dbPassword);
+        //System.setProperty("google.maps.api.key", mapsApiKey);
         SpringApplication.run(LibrashareApplication.class, args);
     }
 

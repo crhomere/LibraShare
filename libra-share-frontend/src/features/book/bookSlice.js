@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const BASE_URL_BOOKS = 'http://localhost:8080/api/v1/librashare/books';
 const endpointAllBooks = '/all';
+const endpointAllBooksByZipcode = '/zipcode/';
 const endpointUserBooks = '/user/';
 const endpointExchangeBook = '/exchange';
 
@@ -17,6 +18,18 @@ export const fetchAllBooks = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.message);
     }
   }
+);
+
+export const fetchBookByZipcode = createAsyncThunk(
+  'books/fetchBookByZipcode',
+  async (zipcode, thunkAPI) => {
+    try {
+      const response = await axios.get(`${BASE_URL_BOOKS}${endpointAllBooksByZipcode}${zipcode}`)
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
 );
 
 export const fetchBooksByUser = createAsyncThunk(
@@ -121,6 +134,31 @@ const bookSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchAllBooks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchBookByZipcode.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchBookByZipcode.fulfilled, (state, action) => {
+        state.books = action.payload.map(book => ({
+          ...book.bookDto,
+          currentOwner: {
+            firstName: book.userDto.firstName,
+            lastName: book.userDto.lastName
+          },
+          currentLocation: {
+            city: book.userDto.city,
+            state: book.userDto.state,
+            longitude: book.userDto.longitude,
+            latitude: book.userDto.latitude
+          }
+        }));
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(fetchBookByZipcode.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

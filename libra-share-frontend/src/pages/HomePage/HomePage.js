@@ -8,6 +8,10 @@ import { Row, Col } from 'react-bootstrap';
 
 const HomePage = () => {
   const [ratingUpdated, setRatingUpdated] = useState(false);
+  const [searchResults, setSearchResults] = useState(false);
+  const [zipcode, setZipcode] = useState('');
+  const [searchedZipCode, setSearchedZipCode] = useState('');
+  const [showMap, setShowMap] = useState(false);
   const dispatch = useDispatch();
   const { books, loading, error } = useSelector((state) => state.books);
   const { user } = useSelector((store) => store.user);
@@ -15,7 +19,7 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(fetchAllBooks());
-  }, [dispatch, ratingUpdated]);
+  }, [dispatch, ratingUpdated, searchResults]);
 
   useEffect(() => {
     const userOwnedBooksMap = {};
@@ -30,8 +34,6 @@ const HomePage = () => {
 
     setDisabledBooksMap(userOwnedBooksMap);
   }, [books, user.id]);
-
-  console.log(disabledBooksMap);
 
   const handleRatingUpdate = () => {
     setRatingUpdated(!ratingUpdated);
@@ -49,31 +51,47 @@ const HomePage = () => {
     return <div>Error: {error}</div>;
   }
 
-  return (
-    <div>
-      <h1>Library Books</h1>
-      <SearchBar />
-      <Row>
-        {books.map((book) => {
-          const isOwnedByLoggedInUser = book.userDto?.id === user.id;
-          const disableExchange = disabledBooksMap[book.bookDto.title];
+  const handleZipcodeChange = (e) => {
+    setZipcode(e.target.value);
+  };
 
-          return (
-            <Col key={book.id} sm={4}>
-              <BookCard
-                book={book}
-                {...book.bookDto}
-                {...book.userDto}
-                genre={book.bookDto.genre[0]}
-                onUpdateRating={handleRatingUpdate}
-                onExchangeBook={handleExchangeBook}
-                disableExchange={disableExchange}
-              />
-            </Col>
-          );
-        })}
-      </Row>
-    </div>
+  const handleZipcodeSubmit = (e) => {
+    e.preventDefault();
+    setSearchedZipCode(zipcode);
+    setShowMap(true);
+    setSearchResults(true);
+  };
+
+  return (
+      <div>
+        <h1>Library Books</h1>
+        <SearchBar
+          onZipcodeChange={handleZipcodeChange}
+          onZipcodeSubmit={handleZipcodeSubmit}
+          showMap={showMap}
+        />
+        <Row>
+          {books.map((book) => {
+            const isOwnedByLoggedInUser = book.userDto?.id === user.id;
+            const disableExchange = disabledBooksMap[book.bookDto.title];
+
+            return (
+              <Col key={book.id} sm={4}>
+                <BookCard
+                  book={book}
+                  {...book.bookDto}
+                  {...book.userDto}
+                  genre={book.bookDto.genre[0]}
+                  onUpdateRating={handleRatingUpdate}
+                  onExchangeBook={handleExchangeBook}
+                  disableExchange={disableExchange}
+                  searchedZipCode={searchedZipCode}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+      </div>
   );
 };
 
