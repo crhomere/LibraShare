@@ -61,6 +61,10 @@
   outline: none !important;
 }
 
+.btn-primary:disabled {
+  cursor: not-allowed;
+}
+
 .main-color-signup-btn {
   background-color: #2e302f;
   border: none;

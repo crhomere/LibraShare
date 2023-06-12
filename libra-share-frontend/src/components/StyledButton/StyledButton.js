@@ -6,7 +6,6 @@ const StyledButton = ({ variant, onClick, disabled, children }) => {
   return (
     <Button
       size="sm"
-      variant={variant}
       onClick={onClick}
       disabled={disabled}
       className="styled-btn"

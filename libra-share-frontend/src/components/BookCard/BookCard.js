@@ -45,7 +45,10 @@ const BookCard = ({
     }
   };
 
+  
+
   return (
+    <div>
     <div className="book-card-container" onClick={handleOpenModal}>
       <Card className="book-card">
         <Card.Img variant="top" src={image} className="book-card-image" />
@@ -56,20 +59,21 @@ const BookCard = ({
           <Card.Text>Author: {author}</Card.Text>
           <Card.Text>Genre: {genre}</Card.Text>
           <Card.Text>
-            <span className="book-owner-title">Owner:</span> {firstName} {lastName}
+            <span className="book-owner-title">Owner:</span> {firstName}{' '}
+            {lastName}
           </Card.Text>
         </Card.Body>
         <div className="book-card-bt-container">
-          <StyledButton
-            onClick={handleExchange}
+          <StyledButton 
+            onClick={handleExchange} 
             disabled={disableExchange}
-        
-          >
+            >
             Exchange
           </StyledButton>
           <StyledButton onClick={handleExchange}>Wish list</StyledButton>
         </div>
       </Card>
+
       <BookDetailsModal
         book={{
           bookId,
@@ -84,6 +88,8 @@ const BookCard = ({
         showModal={showModal}
         handleCloseModal={handleCloseModal}
       />
+    </div>
+    
     </div>
   );
 };

@@ -7,8 +7,9 @@
 
 .styled-btn:disabled {
   opacity: 0.6;
-  cursor: not-allowed !important;
+  pointer-events: none;
   background-color: rgb(91, 72, 67);
+  cursor: not-allowed;
 }
 
 .styled-btn:hover,
