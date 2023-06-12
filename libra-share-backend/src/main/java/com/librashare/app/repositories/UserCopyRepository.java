@@ -24,4 +24,5 @@ public interface UserCopyRepository extends JpaRepository<UserCopy, Long> {
 
     List<UserCopy> findAllByUserCopyUserUserId(Long userId);
 
+    List<UserCopy> findAllByUserCopyBookBookId(Long bookId);
 }
