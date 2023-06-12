@@ -61,15 +61,15 @@ public class BookServiceImpl {
             BookDto bookDto = new BookDto(book);
             bookDto.setRating(ratingService.getAllRatingValueByBook(bookDto.getBookId()));
             if (userCopies.isEmpty()) {
-            UserBookDto userBookDto = new UserBookDto(null,bookDto, true, null);
-            userBooks.add(userBookDto);
-        } else {
-            for (UserCopy userCopy : userCopies) {
-                UserDto userDto = new UserDto(userCopy.getUserCopyUser());
-                UserBookDto userBookDto = new UserBookDto(userDto, bookDto,userCopy.getExchangeReady(),userCopy.getLastExchangedDate());
+                UserBookDto userBookDto = new UserBookDto(null,bookDto, true, null);
                 userBooks.add(userBookDto);
+            } else {
+                for (UserCopy userCopy : userCopies) {
+                    UserDto userDto = new UserDto(userCopy.getUserCopyUser());
+                    UserBookDto userBookDto = new UserBookDto(userDto, bookDto,userCopy.getExchangeReady(),userCopy.getLastExchangedDate());
+                    userBooks.add(userBookDto);
+                }
             }
-        }
         }
         return userBooks.isEmpty()?Collections.emptyList() : userBooks;
     }
@@ -366,4 +366,3 @@ public class BookServiceImpl {
         return exchangeReady;
     }
 }
-
