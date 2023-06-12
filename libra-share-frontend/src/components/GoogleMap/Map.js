@@ -47,7 +47,7 @@ const GoogleMap = ({ zipCode, zoom }) => {
         </div>
       ) : (
         <React.StrictMode>
-          <div ref={mapRef} style={{ height: '100%' }} />
+          <div ref={mapRef} style={{ height: '100%', width: '90%'}} />
         </React.StrictMode>
       )}
     </GoogleMapsProvider>

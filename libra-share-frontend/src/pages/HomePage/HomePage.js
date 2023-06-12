@@ -8,10 +8,9 @@ import { Row, Col } from 'react-bootstrap';
 
 const HomePage = () => {
   const [ratingUpdated, setRatingUpdated] = useState(false);
-  const [searchResults, setSearchResults] = useState(false);
   const [zipcode, setZipcode] = useState('');
   const [searchedZipCode, setSearchedZipCode] = useState('');
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setshowMap] = useState(true);
   const dispatch = useDispatch();
   const { books, loading, error } = useSelector((state) => state.books);
   const { user } = useSelector((store) => store.user);
@@ -19,7 +18,7 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(fetchAllBooks());
-  }, [dispatch, ratingUpdated, searchResults]);
+  }, [dispatch, ratingUpdated]);
 
   useEffect(() => {
     const userOwnedBooksMap = {};
@@ -34,6 +33,10 @@ const HomePage = () => {
 
     setDisabledBooksMap(userOwnedBooksMap);
   }, [books, user.id]);
+
+  useEffect(() => {
+    setshowMap(true);
+  }, [searchedZipCode]);
 
   const handleRatingUpdate = () => {
     setRatingUpdated(!ratingUpdated);
@@ -58,24 +61,24 @@ const HomePage = () => {
   const handleZipcodeSubmit = (e) => {
     e.preventDefault();
     setSearchedZipCode(zipcode);
-    setShowMap(true);
-    setSearchResults(true);
   };
 
   return (
-      <div>
-        <h1>Library Books</h1>
-        <SearchBar
-          onZipcodeChange={handleZipcodeChange}
-          onZipcodeSubmit={handleZipcodeSubmit}
-          showMap={showMap}
-        />
+    <div>
+      <h1>Library Books</h1>
+      <SearchBar
+        onZipcodeChange={handleZipcodeChange}
+        onZipcodeSubmit={handleZipcodeSubmit}
+        userZipcode={user.zipcode}
+        showMap={showMap}
+        setshowMap={setshowMap}
+      />
         <Row>
           {books.map((book) => {
             const isOwnedByLoggedInUser = book.userDto?.id === user.id;
             const disableExchange = disabledBooksMap[book.bookDto.title];
 
-            return (
+            return !searchedZipCode || searchedZipCode == book.userDto?.zipcode ? (
               <Col key={book.id} sm={4}>
                 <BookCard
                   book={book}
@@ -85,13 +88,12 @@ const HomePage = () => {
                   onUpdateRating={handleRatingUpdate}
                   onExchangeBook={handleExchangeBook}
                   disableExchange={disableExchange}
-                  searchedZipCode={searchedZipCode}
                 />
               </Col>
-            );
+            ) : null
           })}
         </Row>
-      </div>
+    </div>
   );
 };
 
