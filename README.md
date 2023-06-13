@@ -104,7 +104,7 @@ The system architecture can be divided into the following layers:
 - Database: We will utilize PostgreSQL as the database management system to store and retrieve data related to books, users, reviews, and transactions.
 - Database Schema: We will design an efficient database schema that represents entities such as books, users, reviews, and establish appropriate relationships between them.
 
-<img src="libra-share-frontend/src/images/librashare_schema.png" width="600" alt="Ratings form">
+<img src="libra-share-frontend/src/assets/images/librashare_schema.png" width="600" alt="Ratings form">
 
 <a name="Integration Layer"></a>
 
@@ -246,7 +246,7 @@ mvn spring-boot:run
 
 ## Getting Started
 
-Now Librashare should be accessible from [port 8080](http://localhost:8080)
+Now Librashare should be accessible from [port 3000](http://localhost:3000)
 
 <a name="API Documentation"></a>
 
@@ -280,46 +280,53 @@ Here is a brief overview of the API endpoints available:
 
 Home page: The prominently placed "Enter Library" button invites users to delve into the library's collections and resources.
 
-<img src="libra-share-frontend/src/images/home.png" width="600" alt="Home page">
+<img src="libra-share-frontend/src/assets/images/home.png" width="600" alt="Home page">
 
 Welcome page: Entry into the librashare app utilizing register for new users or log in features for existing users.
 
-<img src="libra-share-frontend/src/images/welcome-page.png" width="600" alt="Welcome page">
+<img src="libra-share-frontend/src/assets/images/welcome-page.png" width="600" alt="Welcome page">
 
 Register page: New users are able to register for Librashare.
 
-<img src="libra-share-frontend/src/images/register.png" width="600" alt="Register page">
+<img src="libra-share-frontend/src/assets/images/register.png" width="600" alt="Register page">
 
 Log In page: Existing users are able to log into Librashare.
 
-<img src="libra-share-frontend/src/images/login.png" width="600" alt="Log In page">
+<img src="libra-share-frontend/src/assets/images/login.png" width="600" alt="Log In page">
 
 Here we demonstrate that if a book with the same title as the one the logged-in user has is available for exchange, the option to exchange will be disabled for that user.
 
 <p float="left">
-  <img src="libra-share-frontend/src/images/exchange1.png" width="400" alt="Exhange photo 1"> ->
-  <img src="libra-share-frontend/src/images/exchange2.png" width="400" alt="Exchange photo 2">
+  <img src="libra-share-frontend/src/assets/images/exchange1.png" width="400" alt="Exhange photo 1"> ->
+  <img src="libra-share-frontend/src/assets/images/exchange2.png" width="400" alt="Exchange photo 2">
 </p>
 
 Ratings and review: Users can add ratings and reviews for books.
 
 <p float="left">
-  <img src="libra-share-frontend/src/images/ratings1.png" width="400" alt="Ratings form"> ->
-  <img src="libra-share-frontend/src/images/ratings2.png" width="400" alt="Ratings form populated">
+  <img src="libra-share-frontend/src/assets/images/ratings1.png" width="400" alt="Ratings form"> ->
+  <img src="libra-share-frontend/src/assets/images/ratings2.png" width="400" alt="Ratings form populated">
 </p>
 
 CRUD functionalities for books, book information, and user rating.
 
 <p float="left">
-  <img src="libra-share-frontend/src/images/CRUD-book.png" width="350" alt="CRUD book functionality">
-  <img src="libra-share-frontend/src/images/CRUD-book-info.png" width="350" alt="CRUD book info functionality">
-  <img src="libra-share-frontend/src/images/CRUD-rating.png" width="350" alt="CRUD user rating functionality"> 
+  <img src="libra-share-frontend/src/assets/images/CRUD-book.png" width="350" alt="CRUD book functionality">
+  <img src="libra-share-frontend/src/assets/images/CRUD-book-info.png" width="350" alt="CRUD book info functionality">
+  <img src="libra-share-frontend/src/assets/images/CRUD-rating.png" width="350" alt="CRUD user rating functionality"> 
+</p>
+
+Add by ISBN: Users can add book to the collection by ISBN.
+
+<p float="left">
+  <img src="libra-share-frontend/src/assets/images/addISBN.png" width="450" alt="Add book by ISBN">
+  <img src="libra-share-frontend/src/assets/images/addISBN-success.png" width="510" alt="Book successfully added by ISBN"> 
 </p>
 
 Account page: Users can view their personal user dashboard.
 
-<img src="libra-share-frontend/src/images/user-account-overview.png" width="600" alt="User account overview">
+<img src="libra-share-frontend/src/assets/images/user-account-overview.png" width="600" alt="User account overview">
 
 Error page: Error handling page to notify users of a broken link.
 
-<img src="libra-share-frontend/src/images/page-not-found.png" width="600" alt="Page not found">
+<img src="libra-share-frontend/src/assets/images/page-not-found.png" width="600" alt="Page not found">
