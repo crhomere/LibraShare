@@ -1,0 +1,28 @@
+.modal-body {
+  display: flex;
+  gap: 1rem;
+}
+
+
+.img-section img {
+  width: 100%;
+}
+.img-section info-section {
+  width: 50%;
+}
+
+.info-section {
+  /* margin-top: 2rem; */
+}
+
+.info-section .header {
+  font-weight: 700;
+}
+
+.add-review-btn {
+  margin-top: 2rem;
+}
+
+.text-note {
+  font-size: 12px;
+}

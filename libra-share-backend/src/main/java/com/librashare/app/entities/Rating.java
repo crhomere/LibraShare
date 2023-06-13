@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -18,9 +18,10 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ratingId;
     private String username;
+    @Column(length = 1000)
     private String comment;
     private Integer rating;
-    private Date lastModified;
+    private LocalDateTime lastModified;
 
     @ManyToOne()
     @JoinColumn(name = "book_id", referencedColumnName = "bookId")

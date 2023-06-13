@@ -10,11 +10,10 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +29,6 @@ public class User {
     private String zipcode;
     private String latitude;
     private String longitude;
-    @Column(unique = true)
     private String username;
 
     public User(UserDto userDto) {

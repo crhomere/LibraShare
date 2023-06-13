@@ -4,30 +4,41 @@ import com.librashare.app.dtos.UserDto;
 import com.librashare.app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     @PostMapping("/register")
-    public String addUser(@RequestBody UserDto userDto) {
+    public Map<String, Object> addUser(@RequestBody UserDto userDto) {
         String passHash = passwordEncoder.encode(userDto.getPassword());
         userDto.setPassword(passHash);
-        return userService.addUser(userDto);
+
+        String result = userService.addUser(userDto);
+        boolean success = !result.startsWith("Error");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", success);
+        response.put("message", result);
+
+        return response;
     }
 
+
     @PostMapping("/login")
-    public List<String> userLogin(@RequestBody UserDto userDto) {
+    public Optional<UserDto> userLogin(@RequestBody UserDto userDto) {
         return userService.userLogin(userDto);
     }
 }

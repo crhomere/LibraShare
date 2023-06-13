@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -16,8 +16,8 @@ public class UserCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userCopyId;
-
-    private Date lastExchangedDate;
+    private LocalDateTime lastExchangedDate;
+    private LocalDateTime expiresAt;
     private Boolean exchangeReady;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -33,6 +33,9 @@ public class UserCopy {
         }
         if (userCopyDto.getExchangeReady() != null) {
             this.exchangeReady = userCopyDto.getExchangeReady();
+        }
+        if (userCopyDto.getExpiresAt() != null) {
+            this.expiresAt = userCopyDto.getExpiresAt();
         }
     }
 }
