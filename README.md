@@ -231,6 +231,10 @@ Open a new terminal (do not close the terminal running the frontend)
 Build the application: Navigate to your backend project directory in the terminal and run the following command to build the application
 
 ```
+cd libra-share-backend/
+```
+
+```
 mvn clean install
 
 ```
