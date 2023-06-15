@@ -9,7 +9,7 @@
   - [2. Backend](#2-backend)
   - [3. Database](#3-database)
   - [4. External API Usage](#4-external-api-usage)
-    - [ Google Maps API](#-google-maps-api)
+    - [ Google Maps Platform ](#-google-maps-platform)
     - [ Open Library API](#-open-library-api)
     - [ YAddress API](#-yaddress-api)
 - [System Architecture](#system-architecture)
@@ -30,14 +30,14 @@
   - [Running the Frontend](#running-the-frontend)
   - [Running the Backend](#running-the-backend)
 - [Getting Started](#getting-started)
-- [API Documentation](#api-documentation)
+- [API Documentation](#internal-api-documentation)
 - [Application Walkthrough](#application-walkthrough)
 
 <a name="System Overview"></a>
 
 ## System Overview
 
-Our decentralized library system is a web-based application that allows users to access a database of books and interact with other users. Our system enables users to leave reviews and ratings for books, check out physical copies of books, and facilitates the transfer of books between users. We utilize ReactJS for the frontend, Java for the backend, the Google Maps API, and PostgreSQL for the database management.
+Our decentralized library system is a web-based application that allows users to access a database of books and interact with other users. Our system enables users to leave reviews and ratings for books, check out physical copies of books, and facilitates the transfer of books between users. We utilize ReactJS for the frontend, Java for the backend, the Google Maps Platform, and PostgreSQL for the database management.
 
 <a name="System Components"></a>
 
@@ -65,9 +65,9 @@ Our decentralized library system is a web-based application that allows users to
 
 ### 4. External API Usage
 
-#### <div align="center"> Google Maps API
+#### <div align="center"> Google Maps Platform
 
-The Google Maps API is leveraged to identify the nearest physical book to the requesting user. This API helps us pinpoint the current location of the users and the books, making it easier to facilitate the transfer of physical books between users. You can find more about this API at the [Google Maps Platform](https://mapsplatform.google.com/).
+The Google Maps Platform is leveraged to identify the nearest physical book to the requesting user and display their location on a map. This Platform helps us pinpoint the current location of the users and the books, making it easier to facilitate the transfer of physical books between users. You can find more about this at the [Google Maps Platform](https://mapsplatform.google.com/).
 
 #### <div align="center"> Open Library API
 
@@ -75,11 +75,11 @@ The [Open Library API](https://openlibrary.org/developers/api) is a freely acces
 
 #### <div align="center"> YAddress API
 
-The [YAddress API](https://www.yaddress.net/WebApi) is used for verifying and standardizing the addresses provided by our users. This API assists us in ensuring that the user's location data is accurate, which is critical for our service as we rely on precise user locations to facilitate the transfer of physical books. The YAddress API takes a user's provided address, verifies its validity, and returns a standardized version of the address that ensures consistency in our database and improves the accuracy of the location data we use with the Google Maps API.
+The [YAddress API](https://www.yaddress.net/WebApi) is used for verifying and standardizing the addresses provided by our users. This API assists us in ensuring that the user's location data is accurate, which is critical for our service as we rely on precise user locations to facilitate the transfer of physical books. The YAddress API takes a user's provided address, verifies its validity, and returns a standardized version of the address that ensures consistency in our database and improves the accuracy of the location data we use with the Google Maps Geocoding API.
 
 ## System Architecture
 
-Our decentralized library system follows a client-server architecture, where the frontend interacts with the backend to retrieve and manipulate data stored in the database. The Google Maps API is utilized for location tracking and book availability.
+Our decentralized library system follows a client-server architecture, where the frontend interacts with the backend to retrieve and manipulate data stored in the database. The Google Maps Platform is utilized for location tracking and book availability.
 
 The system architecture can be divided into the following layers:
 
@@ -110,8 +110,8 @@ The system architecture can be divided into the following layers:
 
 ### 4. Integration Layer
 
-- Google Maps API Integration: We will integrate the Google Maps API to identify the nearest physical book to the requesting user.
-- API Communication: We will implement RESTful APIs to facilitate communication between the frontend and backend components.
+- Google Maps Platform Integration: We will integrate the Google Maps Platform to identify the nearest physical book to the requesting user.
+- Platform Communication: We will implement RESTful APIs to facilitate communication between the frontend and backend components.
 
 ## System Features
 
@@ -135,7 +135,7 @@ The system architecture can be divided into the following layers:
 
 ### 3. Book Checkout
 
-- Identify the nearest physical book to the requesting user using the Google Maps API.
+- Identify the nearest physical book to the requesting user using the Google Maps Platform.
 - Facilitate book transfer between users by updating the book's ownership in the database.
 - Enforce a two-week waiting period before a checked-out book can be checked out again.
 
@@ -218,7 +218,9 @@ npm install
 Start the application: Start the React application by running
 
 ```
-npm start
+npm run build
+npm install -g serve
+serve -s build
 
 ```
 
@@ -254,7 +256,7 @@ Now Librashare should be accessible from [port 3000](http://localhost:3000)
 
 <a name="API Documentation"></a>
 
-## API Documentation
+## Internal API Documentation
 
 Here is a brief overview of the API endpoints available:
 
