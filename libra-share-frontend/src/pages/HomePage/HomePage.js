@@ -17,6 +17,7 @@ const HomePage = () => {
   const [disabledBooksMap, setDisabledBooksMap] = useState({});
   const [bookLocations, setBookLocations] = useState({});
   const [bookLocationCopy, setBookLocationCopy] = useState({});
+  const [distance, setDistance] = useState(null);
 
   useEffect(() => {
     dispatch(fetchAllBooks());
@@ -33,10 +34,11 @@ const HomePage = () => {
 
     let booksOwned = [];
     books.forEach((book) => {
-      if (book.userDto) {
+      if (book.userDto && book.bookDto) {
         booksOwned.push({
+          userId: book.userDto.id,
           zipcode: book.userDto.zipcode,
-          name: book.userDto.firstName,
+          name: book.bookDto.title,
           position: { lat: +book.userDto.latitude, lng: +book.userDto.longitude }
         });
       }
@@ -76,6 +78,7 @@ const HomePage = () => {
     e.preventDefault();
     setSearchedZipCode(zipcode);
     resetBookLocations();
+    console.log(distance);
   };
 
   const resetBookLocations = () => {
@@ -93,14 +96,18 @@ const HomePage = () => {
         setshowMap={setshowMap}
         bookLocations={bookLocations}
         setBookLocations={setBookLocations}
+        distance={distance}
+        setDistance={setDistance}
       />
       <Row>
         {books.map((book) => {
           const isOwnedByLoggedInUser = book.userDto?.id === user.id;
           const disableExchange = disabledBooksMap[book.bookDto.title];
-
-          return !searchedZipCode || searchedZipCode == book.userDto?.zipcode ? (
+          return !searchedZipCode 
+          || (searchedZipCode === book.userDto?.zipcode 
+          && !isOwnedByLoggedInUser) ? (
             <Col key={book.id} sm={4}>
+              {console.log("boook "+ book.userDto)}
               <BookCard
                 book={book}
                 {...book.bookDto}
@@ -109,7 +116,10 @@ const HomePage = () => {
                 onUpdateRating={handleRatingUpdate}
                 onExchangeBook={handleExchangeBook}
                 disableExchange={disableExchange}
-              />
+              //   distance={distance && (book.userDto?.id && book.userDto.id)
+              //             ? distance[book.userDto.id].distance
+              //             : undefined}
+               />
             </Col>
           ) : null
         })}

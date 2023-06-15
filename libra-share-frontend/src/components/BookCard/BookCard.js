@@ -25,6 +25,7 @@ const BookCard = ({
   zipcode,
   onExchangeBook,
   disableExchange,
+  distance
 }) => {
   const [showModal, setShowModal] = useState(false);
   const { user } = useSelector((store) => store.user);
@@ -62,6 +63,9 @@ const BookCard = ({
           <Card.Text>
             Location: {city || ''}{city && state ? ', ' : ''} {state || ''} {zipcode || ''}
           </Card.Text>
+          {/* <Card.Text>
+            Distance: {distance ? distance.text : ''}
+          </Card.Text> */}
         </Card.Body>
         <Button
           variant="primary"

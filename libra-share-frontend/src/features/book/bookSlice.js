@@ -104,10 +104,6 @@ export const exchangeBook = createAsyncThunk(
   }
 );
 
-
-
-
-
 const bookSlice = createSlice({
   name: 'books',
   initialState: {
@@ -154,6 +150,11 @@ const bookSlice = createSlice({
             longitude: book.userDto.longitude,
             latitude: book.userDto.latitude
           }
+        }));
+        state.userBooks = action.payload.map((item) => ({
+          userDto: item.userDto,
+          bookDto: item.bookDto,
+          exchangeReady: item.exchangeReady,
         }));
         state.loading = false;
         state.error = null;

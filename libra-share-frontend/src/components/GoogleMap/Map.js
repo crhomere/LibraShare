@@ -1,10 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { GoogleMapsProvider } from '@ubilabs/google-maps-react-hooks';
 import MapMarkers from './MapMarkers'
-import {REACT_APP_API_KEY} from '../../constants.js';
+import MapCanvas from './MapCanvas'
+import DistanceMatrixService from './DistanceMatrixService'
+import { REACT_APP_API_KEY } from '../../constants.js';
 import axios from 'axios';
 
-const GoogleMap = ({ zipCode, zoom, bookLocations }) => {
+const GoogleMap = ({ zipCode, zoom, bookLocations, distance, setDistance }) => {
   const [coordinates, setCoordinates] = useState(null);
   const [mapContainer, setMapContainer] = useState(null);
   const apiKey = REACT_APP_API_KEY;
@@ -40,7 +42,7 @@ const GoogleMap = ({ zipCode, zoom, bookLocations }) => {
   };
 
   return (
-    <GoogleMapsProvider googleMapsAPIKey={apiKey} mapContainer={mapContainer} mapOptions={mapOptions}>
+    <GoogleMapsProvider googleMapsAPIKey={apiKey} mapContainer={mapContainer} mapOptions={mapOptions} libraries={['places']}>
       {isLoading ? (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '100%' }}>
           <div className="spinner-border" role="status">
@@ -49,8 +51,16 @@ const GoogleMap = ({ zipCode, zoom, bookLocations }) => {
         </div>
       ) : (
         <React.StrictMode>
-          <div ref={mapRef} style={{ height: '100%', width: '90%'}} />
-          <MapMarkers bookLocations={bookLocations}/>
+          {/* <div id="container"> */}
+          <div ref={mapRef} style={{ height: '100%', width: '90%' }} />
+          {/* <MapCanvas ref={mapRef} /> */}
+          <DistanceMatrixService
+            bookLocations={bookLocations}
+            zipCode={zipCode}
+            distance={distance}
+            setDistance={setDistance}/>
+          <MapMarkers bookLocations={bookLocations} userLocation={coordinates}/>
+          {/* </div> */}
         </React.StrictMode>
       )}
     </GoogleMapsProvider>
