@@ -61,11 +61,17 @@
   outline: none !important;
 }
 
+.btn-primary:disabled {
+  cursor: not-allowed;
+}
+
 .main-color-signup-btn {
   background-color: #2e302f;
   border: none;
   transition: transform 0.3s ease-in-out;
 }
+
+/* SIGNUP */
 
 .main-color-signup-btn:hover,
 .main-color-signup-btn:active,
