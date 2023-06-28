@@ -8,7 +8,12 @@
   background-color: rgb(195, 176, 144);
 }
 
+.container {
+  margin-top: 60px;
+  margin-bottom: 100px;
+}
+
 #map-container {
-  height: 0 !important;
-  min-height: 5rem;
+  margin-top: 60px;
+  margin-bottom: 100px;
 }

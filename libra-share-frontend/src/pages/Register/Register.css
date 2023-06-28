@@ -11,6 +11,10 @@
   color: #2e302f;
 }
 
+.form-container input {
+  width: 100%;
+}
+
 .register-buttons {
   display: flex;
   align-items: center;

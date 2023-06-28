@@ -52,19 +52,27 @@ public class BookServiceImpl {
         }
     }
 
-
     @Transactional
-    public List<BookDto> getAllBooks() {
+    public List<UserBookDto> getAllBooks() {
+        List<UserBookDto> userBooks = new ArrayList<>();
         List<Book> books = bookRepository.findAll();
-        List<BookDto> bookDtos = new ArrayList<>();
         for (Book book : books) {
+            List<UserCopy> userCopies = userCopyRepository.findAllByUserCopyBookBookId(book.getBookId());
             BookDto bookDto = new BookDto(book);
             bookDto.setRating(ratingService.getAllRatingValueByBook(bookDto.getBookId()));
-            bookDtos.add(bookDto);
+            if (userCopies.isEmpty()) {
+            UserBookDto userBookDto = new UserBookDto(null,bookDto, true, null);
+            userBooks.add(userBookDto);
+        } else {
+            for (UserCopy userCopy : userCopies) {
+                UserDto userDto = new UserDto(userCopy.getUserCopyUser());
+                UserBookDto userBookDto = new UserBookDto(userDto, bookDto,userCopy.getExchangeReady(),userCopy.getLastExchangedDate());
+                userBooks.add(userBookDto);
+            }
         }
-        return bookDtos;
+        }
+        return userBooks.isEmpty()?Collections.emptyList() : userBooks;
     }
-
 
     @Transactional
     public String addBook(BookDto bookDto, Long userId) {
