@@ -56,4 +56,71 @@ The system architecture can be divided into the following layers:
    - Enable users to leave reviews and ratings for books.
    - Implement a rating system that aggregates user ratings and displays an average rating for each book.
 
-##
+## Screenshots
+<table>
+  <tr>
+    <td><b>Desktop</td>     
+  </tr>
+ 
+  <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 4 57 21 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/a5fb5e7e-57c6-4cb1-a702-61ecf0987551" />
+  </td>
+  </tr>
+  
+  <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 12 59 48 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/fbde19f0-2c6e-4d71-a767-98959d489aa0" />
+ </td>
+ </tr>
+    
+  <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 00 21 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/e83342ea-5084-4d6d-89c8-86a2e1944c32" />
+ </td>
+ </tr>
+  
+  <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 00 37 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/f4d06276-154e-45ec-8ff0-8cc6ebc0017a" />
+ </td>
+ </tr>
+  
+  <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 00 54 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/a35e38c2-fa69-4f8d-8b03-3a5682474c57" />
+ </td>
+ </tr>
+  
+  <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 01 14 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/88807ea5-eb01-4cd5-ab7c-30e0089badb0" />
+ </td>
+ </tr>
+  
+  <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 01 28 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/3e232aa8-5897-402f-8556-dbe685446003" />
+ </td>
+ </tr>
+
+  <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 01 28 PM"src="https://github.com/crhomere/LibraShare/assets/49917973/d36e187d-ae41-44fd-bfd6-b5e8c2f41774" />
+ </td>
+ </tr>
+
+
+   <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 01 28 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/f9ad119f-f967-4115-90eb-2c21d781f038" />
+ </td>
+ </tr>
+
+ 
+   <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 01 28 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/63a4c2f5-cdc5-4c11-a458-e5884c95996a" />
+ </td>
+ </tr>
+
+   <tr>
+    <td valign="top"><img width="1200" alt="Screen Shot 2022-10-04 at 1 01 28 PM" src="https://github.com/crhomere/LibraShare/assets/49917973/4e6cdebe-bfd8-4989-8b42-be12ac155ba2" />
+ </td>
+ </tr>
+ 
+
+ 
+
+
+ </table>
