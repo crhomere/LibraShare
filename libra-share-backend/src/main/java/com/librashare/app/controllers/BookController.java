@@ -47,7 +47,7 @@ public class BookController {
     }
 
     @GetMapping("/all")
-    public List<BookDto> getAllBooks() {
+    public List<UserBookDto> getAllBooks() {
         return bookServiceImpl.getAllBooks();
     }
 

@@ -1,0 +1,26 @@
+.account-header {
+  font-size: 2.8rem;
+}
+.account-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  width: 80%;
+}
+
+.account-detail h5 {
+  margin-right: 20px;
+  flex-shrink: 0;
+  width: 150px;
+  text-align: left;
+}
+
+.account-detail p {
+  margin: 0;
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 20%;
+}

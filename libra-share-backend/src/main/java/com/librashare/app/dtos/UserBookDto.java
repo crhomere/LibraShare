@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 public class UserBookDto {
     private UserDto userDto;
     private BookDto bookDto;
-    private boolean exchangeReady;
+    private Boolean exchangeReady;
     private LocalDateTime lastExchangedDate;
 
-    public UserBookDto(UserDto userDto, BookDto bookDto, boolean exchangeReady, LocalDateTime lastExchangedDate) {
+    public UserBookDto(UserDto userDto, BookDto bookDto, Boolean exchangeReady, LocalDateTime lastExchangedDate) {
         this.userDto = userDto;
         this.bookDto = bookDto;
         this.exchangeReady = exchangeReady;

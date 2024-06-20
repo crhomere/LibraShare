@@ -59,8 +59,8 @@ INSERT INTO users (address_line, city, email, first_name, last_name, latitude, l
                    username, zipcode)
 VALUES ('123 Main Street', 'New York', 'john@example.com', 'John', 'Doe', '40.7128', '-74.0060',
         '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'johndoe', '10001'),
-       ('456 Main Street', 'New York', 'johny@example.com', 'John', 'Doe', '40.7129', '-74.0061',
-        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'johnydoe', '10001'),
+       ('456 Main Street', 'New York', 'psmith@example.com', 'Phillip', 'Smith', '40.7129', '-74.0061',
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-1234', 'NY', 'psmith', '10001'),
        ('456 Elm Street', 'Los Angeles', 'jane@example.com', 'Jane', 'Smith', '34.0522', '-118.2437',
         '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-5678', 'CA', 'janesmith', '90001'),
        ('789 Oak Street', 'Chicago', 'michael@example.com', 'Michael', 'Johnson', '41.8781', '-87.6298',
@@ -68,27 +68,33 @@ VALUES ('123 Main Street', 'New York', 'john@example.com', 'John', 'Doe', '40.71
        ('321 Pine Street', 'Houston', 'sarah@example.com', 'Sarah', 'Davis', '29.7604', '-95.3698',
         '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-3456', 'TX', 'sarahdavis', '77001'),
        ('654 Maple Street', 'Philadelphia', 'robert@example.com', 'Robert', 'Brown', '39.9526', '-75.1652',
-        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-7890', 'PA', 'robertbrown', '19101');
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.klfIyxXbUwEMQhqwgh44IZCR.ZVjKDy', '555-7890', 'PA', 'robertbrown', '19101'),
+ ('738 Washington Street', 'San rancisco', 'oxana@example.com', 'Oxana', 'Howard', '37.733795', '-122.446747',
+        '$2a$10$zrEQEPk9l1mQBVMnxnX9A.kllIyxXbUwEMphqwgh44IZCR.ZVjKDy', '415-4448888', 'CA', 'oxanahoward', '94108');
+
+
 
 INSERT INTO user_copy (last_exchanged_date, expires_at, exchange_ready, user_id, book_id)
 VALUES ('1900-01-01', '1900-01-15', true, 1, 1),
-       ('1900-01-01', '1900-01-15', true, 1, 3),
-       ('1900-01-01', '1900-01-15', true, 1, 2),
-       ('1900-01-01', '1900-01-15', true, 2, 4),
-       ('1900-01-01', '1900-01-15', true, 2, 1),
-       ('1900-01-01', '1900-01-15', true, 2, 3),
-       ('1900-01-01', '1900-01-15', true, 3, 2),
+       ('1900-01-01', '1900-01-15', true, 2, 2),
+       ('1900-01-01', '1900-01-15', true, 3, 3),
+        ('1900-01-01', '1900-01-15', true, 1, 4),
        ('1900-01-01', '1900-01-15', true, 4, 4),
-       ('1900-01-01', '1900-01-15', true, 5, 1);
+       ('1900-01-01', '1900-01-15', true, 5, 5),
+       ('1900-01-01', '1900-01-15', true, 6, 6),
+       ('1900-01-01', '1900-01-15', true, 7, 7),
+       ('1900-01-01', '1900-01-15', true, 7, 8),
+       ('1900-01-01', '1900-01-15', true, 5, 8);
 
 INSERT INTO rating (comment, last_modified, rating, username, book_id, user_id)
-VALUES ('book 1 of user 1', '1900-01-01', 1, 'johndoe', 1, 1),
-       ('book 1 of user 2', '1900-01-01', 2, 'johnydoe', 1, 2),
-       ('book 1 of user 3', '1900-01-01', 3, 'janesmith', 1, 3),
-       ('book 1 of user 4', '1900-01-01', 1, 'michaeljohnson', 1, 4),
-       ('book 2 of user 1', '1900-01-01', 2, 'johndoe', 2, 1),
-       ('book 2 of user 2', '1900-01-01', 2, 'johnydoe', 2, 2),
-       ('book 3 of user 1', '1900-01-01', 2, 'johndoe', 3, 1),
-       ('book 3 of user 2', '1900-01-01', 2, 'johnydoe', 3, 2),
-       ('book 3 of user 3', '1900-01-01', 2, 'janesmith', 3, 3);
+VALUES ('book 1 of user 1', '1900-01-01', 5, 'johndoe', 1, 1),
+       ('book 2 of user 2', '1900-01-01', 5, 'johnydoe', 2, 2),
+       ('book 3 of user 3', '1900-01-01', 3, 'janesmith', 3, 3),
+       ('book 4 of user 4', '1900-01-01', 5, 'michaeljohnson', 4, 4),
+       ('book 5 of user 5', '1900-01-01', 4, 'johndoe', 5, 1),
+       ('book 6 of user 6', '1900-01-01', 5, 'johnydoe', 2, 2),
+       ('book 7 of user 7', '1900-01-01', 5, 'johndoe', 3, 1),
+       ('book 3 of user 4', '1900-01-01', 4, 'johnydoe', 3, 4),
+       ('book 4 of user 6', '1900-01-01', 5, 'janesmith', 3, 6);
+
 
